@@ -175,6 +175,7 @@ export async function calculateCanonicalChart(input: DSSMEEventInput): Promise<C
     julianDay: snap.jdUtc,
     latitude: input.location.latitude,
     longitude: input.location.longitude,
+    timezoneOffset: tzOffset,
     ayanamsa: snap.ayanamsa,
     planets,
     houses: houseList,

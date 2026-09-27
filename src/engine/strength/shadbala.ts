@@ -69,11 +69,19 @@ export function calculateShadbala(context?: ShadbalaContext): ShadbalaState {
 
   // 3. Kaala Bala
   const { totals: kaala, breakdowns: kaalaBreakdowns } = calculateKaalaBalaAll({
+    julianDay: context?.julianDay,
+    latitude: context?.latitude,
+    longitude: context?.longitude,
+    timezoneOffset: context?.timezoneOffset,
+    datetime: context?.datetime,
     timeStr: context?.timeStr,
     panchanga: context?.panchanga,
     planets,
     sunrise: context?.panchanga?.sunrise_time,
     sunset: context?.panchanga?.sunset_time,
+    hora: context?.hora,
+    sthana,
+    dig,
   });
 
   // 4. Chesta Bala

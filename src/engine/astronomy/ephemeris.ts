@@ -45,6 +45,10 @@ export interface EphemerisSnapshot {
 let sweInstance: SwissEph | null = null;
 let sweInitPromise: Promise<SwissEph> | null = null;
 
+export function getSweInstanceSync(): SwissEph | null {
+  return sweInstance;
+}
+
 export async function getSwissEph(): Promise<SwissEph> {
   if (sweInstance) return sweInstance;
   if (!sweInitPromise) {
@@ -158,8 +162,15 @@ export function parseTimezoneOffset(tzStr: string): number {
   const clean = tzStr.trim();
   if (clean === 'Z' || clean === 'UTC' || clean === 'GMT') return 0;
 
-  // 1. Direct offset match like "+09:00", "-05:00", "UTC+9", "UTC+06:30"
-  const match = clean.match(/(?:UTC|GMT)?([+-])(\d{1,2})(?::?(\d{2}))?/i);
+  // 1. Direct decimal offset match like "UTC+6.5", "+5.5", "UTC-3.5"
+  const decMatch = clean.match(/^(?:UTC|GMT)?\s*([+-])\s*(\d+(?:\.\d+)?)$/i);
+  if (decMatch) {
+    const sign = decMatch[1] === '-' ? -1 : 1;
+    return sign * parseFloat(decMatch[2]);
+  }
+
+  // 2. Direct offset match like "+09:00", "-05:00", "UTC+9", "UTC+06:30"
+  const match = clean.match(/(?:UTC|GMT)?\s*([+-])\s*(\d{1,2})(?::?(\d{2}))?/i);
   if (match) {
     const sign = match[1] === '-' ? -1 : 1;
     const h = parseInt(match[2], 10);

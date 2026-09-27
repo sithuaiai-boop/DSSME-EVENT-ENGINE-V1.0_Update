@@ -63,4 +63,26 @@ export interface ShadbalaContext {
   hora?: string | { planet: string };
   lagnaLongitude?: number;
   bhavaMadhya?: number[]; // Longitudes of house midpoints / cusps (12 houses)
+  timezoneOffset?: number;
+}
+
+export interface KaalaContext {
+  julianDay?: number;
+  latitude?: number;
+  longitude?: number;
+  timezoneOffset?: number;
+  planets: Record<string, PlanetState>;
+  timeStr?: string;
+  datetime?: string;
+  panchanga?: PanchangaState;
+  sunrise?: string;
+  sunset?: string;
+  hora?: string | {
+    planet: string;
+    hora_number?: number;
+    start_time?: string;
+    end_time?: string;
+  };
+  sthana?: number[];
+  dig?: number[];
 }
