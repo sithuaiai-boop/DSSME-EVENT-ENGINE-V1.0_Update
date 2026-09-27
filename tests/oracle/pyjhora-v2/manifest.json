@@ -1,0 +1,32 @@
+{
+  "oracleStatus": "INDEPENDENT_PYJHORA",
+  "repository": "naturalstupid/PyJHora",
+  "resolved_commit_full_sha": "48e57d29b47a3143519910a24866758116467485",
+  "resolved_commit_tag": "V4.9.3",
+  "source": "src/jhora/horoscope/chart/strength.py",
+  "entryPoint": "shad_bala",
+  "verification": "Repository cloned live from https://github.com/naturalstupid/PyJHora, unshallowed to full history (107 commits, all tags fetched). shad_bala(jd, place) executed directly via `from jhora.horoscope.chart import strength; strength.shad_bala(jd, place)` -- no DSSME code imported, no DSSME formula reproduced in the runner.",
+  "pythonVersion": "3.12.3",
+  "dependencyVersions": {
+    "pyswisseph": "2.10.3.2 (per PyJHora requirements.txt)",
+    "numpy": "installed per requirements.txt pin (2.1.1 requested)",
+    "pytz": "installed",
+    "geocoder": "installed (import-time dependency of jhora.utils; not exercised, no geocoding performed)",
+    "timezonefinder": "installed (import-time dependency of jhora.utils; not exercised, explicit tz offsets supplied)",
+    "python-dateutil": "installed",
+    "requests": "installed",
+    "certifi": "installed",
+    "geopy": "installed"
+  },
+  "ayanamsaNote": "PyJHora's default sidereal mode as configured by the cloned repository's jhora.config defaults was used as-is; no ayanamsa override was applied by the runner. This should be re-verified explicitly (see 'still to verify' in the audit report) before treating absolute-degree-level comparisons as final -- the Shadbala parity finding below does not depend on ayanamsa choice since the divergences are far larger than any plausible ayanamsa-driven shift.",
+  "fixtureCount": 5,
+  "fixtureIds": [
+    "PYJHORA_V2_001",
+    "PYJHORA_V2_002",
+    "PYJHORA_V2_003",
+    "PYJHORA_V2_004",
+    "PYJHORA_V2_005"
+  ],
+  "independenceFirewall": "This oracle runner (run_oracle.py) imports only: jhora.panchanga.drik, jhora.horoscope.chart.strength, jhora.const, jhora.utils. It does not import, reference, or reproduce any function from the DSSME repository's src/engine/** tree.",
+  "immutabilityPolicy": "This fixture set is evidence. It must not be regenerated to force a future differential test to PASS. Any DSSME engine change that causes a mismatch must be investigated (source-level comparison), not resolved by re-running this generator against new expectations."
+}

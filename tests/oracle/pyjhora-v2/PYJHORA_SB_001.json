@@ -1,0 +1,241 @@
+{
+  "schema_version": "2.0",
+  "oracle_status": "ACTIVE_INDEPENDENT_GROUND_TRUTH",
+  "fixture_id": "PYJHORA_SB_001",
+  "name": "Normal Daytime Chart",
+  "purpose": "F01 \u2014 normal daytime chart",
+  "source": {
+    "engine": "PyJHora",
+    "repository": "https://github.com/naturalstupid/PyJHora",
+    "version": "5.0",
+    "commit": "48e57d29b47a3143519910a24866758116467485",
+    "source_file": "src/jhora/horoscope/chart/strength.py",
+    "source_sha256": "43b4a1c2fd0374b94aa9fb2b5b5bfd6283a8ca6c72fba466a89d8d29407aa278",
+    "function": "shad_bala(jd, place)"
+  },
+  "input": {
+    "date": "2026-03-21",
+    "time": "12:00:00",
+    "timezone_offset": 9.0,
+    "latitude": 35.6895,
+    "longitude": 139.6917,
+    "location_name": "Tokyo, Japan",
+    "ayanamsa": "Lahiri",
+    "julian_day": 2461121.0
+  },
+  "oracle": {
+    "sthana": {
+      "Sun": 225.39,
+      "Moon": 208.09,
+      "Mars": 219.04,
+      "Mercury": 186.11,
+      "Jupiter": 216.97,
+      "Venus": 218.76,
+      "Saturn": 177.96
+    },
+    "kaala": {
+      "Sun": 129.56,
+      "Moon": 327.14,
+      "Mars": -29.6,
+      "Mercury": 49.81,
+      "Jupiter": 305.74,
+      "Venus": 192.73,
+      "Saturn": 25.26
+    },
+    "dig": {
+      "Sun": 58.96,
+      "Moon": 111.93,
+      "Mars": 53.65,
+      "Mercury": 16.58,
+      "Jupiter": 61.17,
+      "Venus": 4.86,
+      "Saturn": 85.14
+    },
+    "chesta": {
+      "Sun": 0.0,
+      "Moon": 0.0,
+      "Mars": 6.45,
+      "Mercury": 45.66,
+      "Jupiter": 83.17,
+      "Venus": 107.19,
+      "Saturn": 2.78
+    },
+    "naisargika": {
+      "Sun": 60.0,
+      "Moon": 51.43,
+      "Mars": 17.14,
+      "Mercury": 25.71,
+      "Jupiter": 34.29,
+      "Venus": 42.86,
+      "Saturn": 8.57
+    },
+    "drik": {
+      "Sun": 13.09,
+      "Moon": -1.9,
+      "Mars": 7.58,
+      "Mercury": 8.35,
+      "Jupiter": -13.82,
+      "Venus": 1.71,
+      "Saturn": 12.63
+    },
+    "total_virupas": {
+      "Sun": 487.0,
+      "Moon": 696.69,
+      "Mars": 274.26,
+      "Mercury": 332.22,
+      "Jupiter": 687.52,
+      "Venus": 568.11,
+      "Saturn": 312.34
+    },
+    "rupa": {
+      "Sun": 8.12,
+      "Moon": 11.61,
+      "Mars": 4.57,
+      "Mercury": 5.54,
+      "Jupiter": 11.46,
+      "Venus": 9.47,
+      "Saturn": 5.21
+    },
+    "strength_ratio": {
+      "Sun": 1.62,
+      "Moon": 1.93,
+      "Mars": 0.91,
+      "Mercury": 0.79,
+      "Jupiter": 1.76,
+      "Venus": 1.72,
+      "Saturn": 1.04
+    },
+    "breakdowns": {
+      "sthana": {
+        "uchcha": {
+          "Sun": 49.14,
+          "Moon": 50.59,
+          "Mars": 52.16,
+          "Mercury": 9.86,
+          "Jupiter": 55.72,
+          "Venus": 59.38,
+          "Saturn": 12.96
+        },
+        "saptavargaja": {
+          "Sun": 101.25,
+          "Moon": 112.5,
+          "Mars": 121.88,
+          "Mercury": 116.25,
+          "Jupiter": 71.25,
+          "Venus": 69.38,
+          "Saturn": 75.0
+        },
+        "ojayugama": {
+          "Sun": 0.0,
+          "Moon": 15.0,
+          "Mars": 30.0,
+          "Mercury": 30.0,
+          "Jupiter": 30.0,
+          "Venus": 15.0,
+          "Saturn": 15.0
+        },
+        "kendra": {
+          "Sun": 60.0,
+          "Moon": 30.0,
+          "Mars": 15.0,
+          "Mercury": 15.0,
+          "Jupiter": 60.0,
+          "Venus": 60.0,
+          "Saturn": 60.0
+        },
+        "dreshkona": {
+          "Sun": 15.0,
+          "Moon": 0.0,
+          "Mars": 0.0,
+          "Mercury": 15.0,
+          "Jupiter": 0.0,
+          "Venus": 15.0,
+          "Saturn": 15.0
+        }
+      },
+      "kaala": {
+        "nathonnatha": {
+          "Sun": 60.97,
+          "Moon": -0.97,
+          "Mars": -0.97,
+          "Mercury": 60.0,
+          "Jupiter": 60.97,
+          "Venus": 60.97,
+          "Saturn": -0.97
+        },
+        "paksha": {
+          "Sun": -50.89,
+          "Moon": 221.78,
+          "Mars": -50.89,
+          "Mercury": -50.89,
+          "Jupiter": 110.89,
+          "Venus": 110.89,
+          "Saturn": -50.89
+        },
+        "tribhaga": {
+          "Sun": 60.0,
+          "Moon": 0.0,
+          "Mars": 0.0,
+          "Mercury": 0.0,
+          "Jupiter": 60.0,
+          "Venus": 0.0,
+          "Saturn": 0.0
+        },
+        "abda": {
+          "Sun": 0.0,
+          "Moon": 0.0,
+          "Mars": 0.0,
+          "Mercury": 0.0,
+          "Jupiter": 15.0,
+          "Venus": 0.0,
+          "Saturn": 0.0
+        },
+        "masa": {
+          "Sun": 0.0,
+          "Moon": 30.0,
+          "Mars": 0.0,
+          "Mercury": 0.0,
+          "Jupiter": 0.0,
+          "Venus": 0.0,
+          "Saturn": 0.0
+        },
+        "vaara": {
+          "Sun": 0.0,
+          "Moon": 0.0,
+          "Mars": 0.0,
+          "Mercury": 0.0,
+          "Jupiter": 0.0,
+          "Venus": 0.0,
+          "Saturn": 45.0
+        },
+        "hora": {
+          "Sun": 0.0,
+          "Moon": 60.0,
+          "Mars": 0.0,
+          "Mercury": 0.0,
+          "Jupiter": 0.0,
+          "Venus": 0.0,
+          "Saturn": 0.0
+        },
+        "ayana": {
+          "Sun": 59.48,
+          "Moon": 16.33,
+          "Mars": 22.26,
+          "Mercury": 40.7,
+          "Jupiter": 58.88,
+          "Venus": 20.87,
+          "Saturn": 32.12
+        },
+        "yuddha": {
+          "Sun": 0.0,
+          "Moon": 0.0,
+          "Mars": 0.0,
+          "Mercury": 0.0,
+          "Jupiter": 0.0,
+          "Venus": 0.0,
+          "Saturn": 0.0
+        }
+      }
+    }
+  }
+}

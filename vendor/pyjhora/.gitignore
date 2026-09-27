@@ -1,0 +1,12 @@
+*.pyc
+/dist
+*.pyc
+/src/PyJHora.egg-info
+src/jhora/horoscope/prediction/marriage.py
+/src/jhora/experiements
+/src/jhora/experiements
+/src/jhora/experiments
+src/.settings/org.eclipse.core.resources.prefs
+src/.settings/org.eclipse.core.resources.prefs
+src/jhora/data/geonames_places_5k.csv
+src/jhora/data/geonames_places_5k_IN.csv

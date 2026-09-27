@@ -1,0 +1,477 @@
+{
+  "oracleStatus": "INDEPENDENT_PYJHORA",
+  "repository": "naturalstupid/PyJHora",
+  "resolved_commit_full_sha": "48e57d29b47a3143519910a24866758116467485",
+  "source_file": "src/jhora/horoscope/chart/strength.py",
+  "entry_point": "shad_bala",
+  "fixtures": [
+    {
+      "fixture_id": "PYJHORA_V2_001",
+      "name": "Chofu Japan (existing DSSME regression chart)",
+      "input": {
+        "date": "2026-09-16",
+        "time": "18:50:00",
+        "timezone_offset": 9.0,
+        "latitude": 35.6528,
+        "longitude": 139.5447,
+        "location_name": "Chofu, Japan",
+        "ayanamsa": "LAHIRI (jhora default config)"
+      },
+      "julianDay": 2461300.284722222,
+      "planets": {
+        "Sun": {
+          "sthana": 153.8,
+          "kaala": 148.26,
+          "dig": 24.05,
+          "chesta": 0,
+          "naisargika": 60.0,
+          "drik": -8.13,
+          "total_virupas": 377.98,
+          "rupa": 6.3,
+          "strength_ratio": 1.26
+        },
+        "Moon": {
+          "sthana": 123.89,
+          "kaala": 189.04,
+          "dig": 14.96,
+          "chesta": 0,
+          "naisargika": 51.43,
+          "drik": -12.73,
+          "total_virupas": 366.59,
+          "rupa": 6.11,
+          "strength_ratio": 1.02
+        },
+        "Mars": {
+          "sthana": 166.87,
+          "kaala": 128.78,
+          "dig": 3.86,
+          "chesta": 29.08,
+          "naisargika": 17.14,
+          "drik": 0.94,
+          "total_virupas": 346.67,
+          "rupa": 5.78,
+          "strength_ratio": 1.16
+        },
+        "Mercury": {
+          "sthana": 273.32,
+          "kaala": 178.75,
+          "dig": 3.33,
+          "chesta": 14.3,
+          "naisargika": 25.71,
+          "drik": -18.39,
+          "total_virupas": 477.02,
+          "rupa": 7.95,
+          "strength_ratio": 1.14
+        },
+        "Jupiter": {
+          "sthana": 196.25,
+          "kaala": 158.89,
+          "dig": 20.85,
+          "chesta": 14.33,
+          "naisargika": 34.29,
+          "drik": 0.6,
+          "total_virupas": 425.21,
+          "rupa": 7.09,
+          "strength_ratio": 1.09
+        },
+        "Venus": {
+          "sthana": 154.51,
+          "kaala": 122.48,
+          "dig": 22.6,
+          "chesta": 46.54,
+          "naisargika": 42.86,
+          "drik": -19.37,
+          "total_virupas": 369.62,
+          "rupa": 6.16,
+          "strength_ratio": 1.12
+        },
+        "Saturn": {
+          "sthana": 152.64,
+          "kaala": 137.67,
+          "dig": 2.24,
+          "chesta": 66.29,
+          "naisargika": 8.57,
+          "drik": -16.23,
+          "total_virupas": 351.18,
+          "rupa": 5.85,
+          "strength_ratio": 1.17
+        }
+      }
+    },
+    {
+      "fixture_id": "PYJHORA_V2_002",
+      "name": "Yangon Myanmar PM (strong Kendra claim fixture)",
+      "input": {
+        "date": "2026-09-25",
+        "time": "12:01:00",
+        "timezone_offset": 6.5,
+        "latitude": 16.8661,
+        "longitude": 96.1951,
+        "location_name": "Yangon, Myanmar",
+        "ayanamsa": "LAHIRI (jhora default config)"
+      },
+      "julianDay": 2461309.0006944444,
+      "planets": {
+        "Sun": {
+          "sthana": 156.55,
+          "kaala": 198.99,
+          "dig": 60.36,
+          "chesta": 0,
+          "naisargika": 60.0,
+          "drik": -0.37,
+          "total_virupas": 475.53,
+          "rupa": 7.93,
+          "strength_ratio": 1.59
+        },
+        "Moon": {
+          "sthana": 137.23,
+          "kaala": 205.78,
+          "dig": 53.59,
+          "chesta": 0,
+          "naisargika": 51.43,
+          "drik": -3.5,
+          "total_virupas": 444.53,
+          "rupa": 7.41,
+          "strength_ratio": 1.24
+        },
+        "Mars": {
+          "sthana": 131.35,
+          "kaala": 62.16,
+          "dig": 81.66,
+          "chesta": 30.24,
+          "naisargika": 17.14,
+          "drik": -3.94,
+          "total_virupas": 318.61,
+          "rupa": 5.31,
+          "strength_ratio": 1.06
+        },
+        "Mercury": {
+          "sthana": 272.63,
+          "kaala": 118.48,
+          "dig": 38.96,
+          "chesta": 22.68,
+          "naisargika": 25.71,
+          "drik": -8.56,
+          "total_virupas": 469.9,
+          "rupa": 7.83,
+          "strength_ratio": 1.12
+        },
+        "Jupiter": {
+          "sthana": 184.44,
+          "kaala": 223.6,
+          "dig": 17.56,
+          "chesta": 16.83,
+          "naisargika": 34.29,
+          "drik": -1.79,
+          "total_virupas": 474.93,
+          "rupa": 7.92,
+          "strength_ratio": 1.22
+        },
+        "Venus": {
+          "sthana": 140.73,
+          "kaala": 160.13,
+          "dig": 11.34,
+          "chesta": 49.2,
+          "naisargika": 42.86,
+          "drik": -9.57,
+          "total_virupas": 394.69,
+          "rupa": 6.58,
+          "strength_ratio": 1.2
+        },
+        "Saturn": {
+          "sthana": 158.48,
+          "kaala": 71.97,
+          "dig": 35.39,
+          "chesta": 63.33,
+          "naisargika": 8.57,
+          "drik": -18.52,
+          "total_virupas": 319.22,
+          "rupa": 5.32,
+          "strength_ratio": 1.06
+        }
+      }
+    },
+    {
+      "fixture_id": "PYJHORA_V2_003",
+      "name": "Berlin Germany (Dreshkon boundary claim fixture)",
+      "input": {
+        "date": "2026-05-01",
+        "time": "08:20:00",
+        "timezone_offset": 2.0,
+        "latitude": 52.52,
+        "longitude": 13.405,
+        "location_name": "Berlin, Germany",
+        "ayanamsa": "LAHIRI (jhora default config)"
+      },
+      "julianDay": 2461161.847222222,
+      "planets": {
+        "Sun": {
+          "sthana": 241.15,
+          "kaala": 136.68,
+          "dig": 34.81,
+          "chesta": 0,
+          "naisargika": 60.0,
+          "drik": 15.15,
+          "total_virupas": 487.79,
+          "rupa": 8.13,
+          "strength_ratio": 1.63
+        },
+        "Moon": {
+          "sthana": 81.78,
+          "kaala": 187.32,
+          "dig": 36.53,
+          "chesta": 0,
+          "naisargika": 51.43,
+          "drik": -40.68,
+          "total_virupas": 316.38,
+          "rupa": 5.27,
+          "strength_ratio": 0.88
+        },
+        "Mars": {
+          "sthana": 225.25,
+          "kaala": 46.7,
+          "dig": 77.08,
+          "chesta": 108.86,
+          "naisargika": 17.14,
+          "drik": 16.97,
+          "total_virupas": 492.0,
+          "rupa": 8.2,
+          "strength_ratio": 1.64
+        },
+        "Mercury": {
+          "sthana": 163.63,
+          "kaala": 194.76,
+          "dig": 81.79,
+          "chesta": 115.77,
+          "naisargika": 25.71,
+          "drik": 13.18,
+          "total_virupas": 594.84,
+          "rupa": 9.91,
+          "strength_ratio": 1.42
+        },
+        "Jupiter": {
+          "sthana": 229.45,
+          "kaala": 287.97,
+          "dig": 54.3,
+          "chesta": 24.48,
+          "naisargika": 34.29,
+          "drik": -32.73,
+          "total_virupas": 597.76,
+          "rupa": 9.96,
+          "strength_ratio": 1.53
+        },
+        "Venus": {
+          "sthana": 231.32,
+          "kaala": 197.51,
+          "dig": 85.57,
+          "chesta": 19.65,
+          "naisargika": 42.86,
+          "drik": 2.94,
+          "total_virupas": 579.85,
+          "rupa": 9.66,
+          "strength_ratio": 1.76
+        },
+        "Saturn": {
+          "sthana": 165.05,
+          "kaala": 60.26,
+          "dig": 92.45,
+          "chesta": 110.3,
+          "naisargika": 8.57,
+          "drik": 14.19,
+          "total_virupas": 450.82,
+          "rupa": 7.51,
+          "strength_ratio": 1.5
+        }
+      }
+    },
+    {
+      "fixture_id": "PYJHORA_V2_004",
+      "name": "Honolulu USA (Bhava-Madhya cusp claim fixture)",
+      "input": {
+        "date": "2026-07-20",
+        "time": "17:00:00",
+        "timezone_offset": -10.0,
+        "latitude": 21.3069,
+        "longitude": -157.8583,
+        "location_name": "Honolulu, USA",
+        "ayanamsa": "LAHIRI (jhora default config)"
+      },
+      "julianDay": 2461242.2083333335,
+      "planets": {
+        "Sun": {
+          "sthana": 220.94,
+          "kaala": 196.89,
+          "dig": 82.73,
+          "chesta": 0,
+          "naisargika": 60.0,
+          "drik": -7.87,
+          "total_virupas": 552.69,
+          "rupa": 9.21,
+          "strength_ratio": 1.84
+        },
+        "Moon": {
+          "sthana": 141.77,
+          "kaala": 226.4,
+          "dig": 5.98,
+          "chesta": 0,
+          "naisargika": 51.43,
+          "drik": -8.83,
+          "total_virupas": 416.75,
+          "rupa": 6.95,
+          "strength_ratio": 1.16
+        },
+        "Mars": {
+          "sthana": 156.81,
+          "kaala": 142.14,
+          "dig": 96.98,
+          "chesta": 20.88,
+          "naisargika": 17.14,
+          "drik": -3.27,
+          "total_virupas": 430.68,
+          "rupa": 7.18,
+          "strength_ratio": 1.44
+        },
+        "Mercury": {
+          "sthana": 237.24,
+          "kaala": 147.38,
+          "dig": 6.68,
+          "chesta": 79.39,
+          "naisargika": 25.71,
+          "drik": -6.4,
+          "total_virupas": 490.0,
+          "rupa": 8.17,
+          "strength_ratio": 1.17
+        },
+        "Jupiter": {
+          "sthana": 237.84,
+          "kaala": 181.34,
+          "dig": 12.64,
+          "chesta": 1.64,
+          "naisargika": 34.29,
+          "drik": -8.63,
+          "total_virupas": 459.12,
+          "rupa": 7.65,
+          "strength_ratio": 1.18
+        },
+        "Venus": {
+          "sthana": 147.52,
+          "kaala": 105.63,
+          "dig": 8.02,
+          "chesta": 33.89,
+          "naisargika": 42.86,
+          "drik": -8.55,
+          "total_virupas": 329.37,
+          "rupa": 5.49,
+          "strength_ratio": 1.0
+        },
+        "Saturn": {
+          "sthana": 180.08,
+          "kaala": 150.53,
+          "dig": 36.03,
+          "chesta": 85.12,
+          "naisargika": 8.57,
+          "drik": 33.22,
+          "total_virupas": 493.55,
+          "rupa": 8.23,
+          "strength_ratio": 1.65
+        }
+      }
+    },
+    {
+      "fixture_id": "PYJHORA_V2_005",
+      "name": "Paris France (waning Moon claim fixture)",
+      "input": {
+        "date": "2026-11-03",
+        "time": "04:00:00",
+        "timezone_offset": 1.0,
+        "latitude": 48.8566,
+        "longitude": 2.3522,
+        "location_name": "Paris, France",
+        "ayanamsa": "LAHIRI (jhora default config)"
+      },
+      "julianDay": 2461347.6666666665,
+      "planets": {
+        "Sun": {
+          "sthana": 122.54,
+          "kaala": 89.09,
+          "dig": 16.35,
+          "chesta": 0,
+          "naisargika": 60.0,
+          "drik": -19.48,
+          "total_virupas": 268.5,
+          "rupa": 4.47,
+          "strength_ratio": 0.89
+        },
+        "Moon": {
+          "sthana": 202.23,
+          "kaala": 172.68,
+          "dig": 19.05,
+          "chesta": 0,
+          "naisargika": 51.43,
+          "drik": -6.93,
+          "total_virupas": 438.46,
+          "rupa": 7.31,
+          "strength_ratio": 1.22
+        },
+        "Mars": {
+          "sthana": 184.22,
+          "kaala": 187.34,
+          "dig": 43.36,
+          "chesta": 35.97,
+          "naisargika": 17.14,
+          "drik": -9.85,
+          "total_virupas": 458.18,
+          "rupa": 7.64,
+          "strength_ratio": 1.53
+        },
+        "Mercury": {
+          "sthana": 231.75,
+          "kaala": 175.93,
+          "dig": 45.24,
+          "chesta": 54.17,
+          "naisargika": 25.71,
+          "drik": -19.9,
+          "total_virupas": 512.9,
+          "rupa": 8.55,
+          "strength_ratio": 1.22
+        },
+        "Jupiter": {
+          "sthana": 268.67,
+          "kaala": 208.73,
+          "dig": 71.75,
+          "chesta": 28.07,
+          "naisargika": 34.29,
+          "drik": -8.01,
+          "total_virupas": 603.5,
+          "rupa": 10.06,
+          "strength_ratio": 1.55
+        },
+        "Venus": {
+          "sthana": 213.6,
+          "kaala": 59.23,
+          "dig": 38.5,
+          "chesta": 54.41,
+          "naisargika": 42.86,
+          "drik": -17.75,
+          "total_virupas": 390.85,
+          "rupa": 6.51,
+          "strength_ratio": 1.18
+        },
+        "Saturn": {
+          "sthana": 110.7,
+          "kaala": 112.91,
+          "dig": 63.11,
+          "chesta": 50.27,
+          "naisargika": 8.57,
+          "drik": -7.54,
+          "total_virupas": 338.02,
+          "rupa": 5.63,
+          "strength_ratio": 1.13
+        }
+      }
+    }
+  ],
+  "resolved_commit_tag": "V4.9.3",
+  "dssme_claimed_commit_sha": "48e57d29bcfa37265a7f920257ad1fba968846c2",
+  "dssme_claimed_commit_exists_in_pyjhora_history": false
+}
