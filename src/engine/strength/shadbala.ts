@@ -65,7 +65,16 @@ export function calculateShadbala(context?: ShadbalaContext): ShadbalaState {
   const { totals: sthana, breakdowns: sthanaBreakdowns } = calculateSthanaBalaAll(planets);
 
   // 2. Dig Bala
-  const dig = calculateDigBalaAll(planets, houses, bhavaMadhya);
+  const dig = calculateDigBalaAll(planets, houses, bhavaMadhya, {
+    julianDay: context?.julianDay,
+    latitude: context?.latitude,
+    longitude: context?.longitude,
+    timezoneOffset: context?.timezoneOffset,
+    datetime: context?.datetime,
+    timeStr: context?.timeStr,
+    houses,
+    bhavaMadhya,
+  });
 
   // 3. Kaala Bala
   const { totals: kaala, breakdowns: kaalaBreakdowns } = calculateKaalaBalaAll({
@@ -85,7 +94,14 @@ export function calculateShadbala(context?: ShadbalaContext): ShadbalaState {
   });
 
   // 4. Chesta Bala
-  const chesta = calculateChestaBalaAll(planets);
+  const chesta = calculateChestaBalaAll(planets, {
+    julianDay: context?.julianDay,
+    latitude: context?.latitude,
+    longitude: context?.longitude,
+    timezoneOffset: context?.timezoneOffset,
+    datetime: context?.datetime,
+    timeStr: context?.timeStr,
+  });
 
   // 5. Naisargika Bala
   const naisargika = calculateNaisargikaBalaAll();
