@@ -93,25 +93,25 @@
         },
         "Mercury": {
           "sthana": 273.32,
-          "kaala": 178.75,
+          "kaala": 160.74,
           "dig": 3.33,
           "chesta": 14.3,
           "naisargika": 25.71,
           "drik": -18.39,
-          "total_virupas": 477.02,
-          "rupa": 7.95,
-          "strength_ratio": 1.14,
+          "total_virupas": 459.01,
+          "rupa": 7.65,
+          "strength_ratio": 1.09,
           "kaala_breakdown": {
             "nathonnatha": 60.0,
-            "paksha": 39.01,
+            "paksha": 20.99,
             "tribhaga": 0.0,
             "abda": 0.0,
             "masa": 0.0,
             "vaara": 45.0,
             "hora": 0.0,
-            "ayana": 34.74,
+            "ayana": 34.75,
             "yuddha": 0.0,
-            "total": 178.75
+            "total": 160.74
           }
         },
         "Jupiter": {

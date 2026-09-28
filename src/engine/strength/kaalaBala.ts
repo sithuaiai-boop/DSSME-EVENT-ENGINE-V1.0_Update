@@ -97,7 +97,11 @@ export function calculateNathonnathaBala(tobh: number, srh: number, pssh: number
 
 /**
  * 2. PAKSHA BALA (_paksha_bala)
- * Lunar phase strength with dynamic benefic/malefic classification.
+ * Lunar phase strength with classical Parashara / Parashara's Light 9 benefic/malefic classification.
+ * - Jupiter and Venus are natural benefics; Waxing Moon (Shukla Paksha) is benefic.
+ * - Sun, Mars, Saturn are natural malefics; Waning Moon (Krishna Paksha) is malefic.
+ * - Mercury when alone or associated with natural benefics is Benefic (receives pbBase = 20.99 in Chofu).
+ * - Total Mercury Kaala = 60 (Nathonnatha) + 20.99 (Paksha) + 45 (Vaara) + 34.75 (Ayana) = 160.74 Virupas.
  */
 export function calculatePakshaBala(pLongs: number[], pSigns: number[]): number[] {
   const sunLong = pLongs[0];

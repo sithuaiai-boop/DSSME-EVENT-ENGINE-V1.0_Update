@@ -37,7 +37,7 @@
       "Sun": 148.26,
       "Moon": 189.04,
       "Mars": 128.78,
-      "Mercury": 178.75,
+      "Mercury": 160.74,
       "Jupiter": 158.89,
       "Venus": 122.48,
       "Saturn": 137.67
@@ -82,7 +82,7 @@
       "Sun": 377.98,
       "Moon": 366.59,
       "Mars": 346.67,
-      "Mercury": 477.02,
+      "Mercury": 459.01,
       "Jupiter": 425.21,
       "Venus": 369.62,
       "Saturn": 351.18
@@ -91,7 +91,7 @@
       "Sun": 6.3,
       "Moon": 6.11,
       "Mars": 5.78,
-      "Mercury": 7.95,
+      "Mercury": 7.65,
       "Jupiter": 7.09,
       "Venus": 6.16,
       "Saturn": 5.85
@@ -100,7 +100,7 @@
       "Sun": 1.26,
       "Moon": 1.02,
       "Mars": 1.16,
-      "Mercury": 1.14,
+      "Mercury": 1.09,
       "Jupiter": 1.09,
       "Venus": 1.12,
       "Saturn": 1.17
@@ -167,7 +167,7 @@
           "Sun": 39.01,
           "Moon": 41.98,
           "Mars": 39.01,
-          "Mercury": 39.01,
+          "Mercury": 20.99,
           "Jupiter": 20.99,
           "Venus": 20.99,
           "Saturn": 39.01
@@ -221,7 +221,7 @@
           "Sun": 66.52,
           "Moon": 54.79,
           "Mars": 57.5,
-          "Mercury": 34.74,
+          "Mercury": 34.75,
           "Jupiter": 50.17,
           "Venus": 13.76,
           "Saturn": 36.39
