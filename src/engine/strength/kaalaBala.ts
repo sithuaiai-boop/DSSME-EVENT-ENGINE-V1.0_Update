@@ -514,13 +514,13 @@ export function calculateKaalaBalaAll(ctx: KaalaContext): {
     if (resNextRise && resNextRise[0]) nextSrh = toDmsHours((resNextRise[0] - jdNext0) * 24 + tz);
   }
 
-  // 3. Planetary positions in PyJHora reference mode (TRUE_PUSHYA mode 29)
+  // 3. Planetary positions in Lahiri mode (SE_SIDM_LAHIRI = 1)
   const pLongs: number[] = [];
   const pSigns: number[] = [];
-  let ayanamsa = 23.09147;
+  let ayanamsa = 24.23;
 
   if (swe) {
-    swe.set_sid_mode(29, 0, 0);
+    swe.set_sid_mode(1, 0, 0);
     ayanamsa = swe.get_ayanamsa(localJd);
     for (let p = 0; p < 7; p++) {
       const sweP = p === 0 ? 0 : (p === 1 ? 1 : (p === 2 ? 4 : (p === 3 ? 2 : (p === 4 ? 5 : (p === 5 ? 3 : 6)))));
@@ -529,8 +529,6 @@ export function calculateKaalaBalaAll(ctx: KaalaContext): {
       pLongs.push(l);
       pSigns.push(Math.floor(l / 30.0));
     }
-    // Restore Lahiri mode for other systems
-    swe.set_sid_mode(1, 0, 0);
   } else {
     for (const name of SHADBALA_PLANETS) {
       const l = ctx.planets[name]?.totalLongitude ?? 0;

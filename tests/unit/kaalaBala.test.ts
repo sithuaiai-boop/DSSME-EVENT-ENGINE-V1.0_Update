@@ -247,6 +247,12 @@ if (process.argv[1] && process.argv[1].endsWith('kaalaBala.test.ts')) {
     console.log(`====================================================`);
 
     if (res.failedComponentAssertions > 0 || res.failedTotalAssertions > 0) {
+      console.log('FAILURES:');
+      for (const r of res.records) {
+        if (r.status === 'FAIL') {
+          console.log(`  ${r.fixtureId} ${r.planet} ${r.component}: actual=${r.actual}, expected=${r.expected}, delta=${r.delta}`);
+        }
+      }
       process.exit(1);
     } else {
       process.exit(0);

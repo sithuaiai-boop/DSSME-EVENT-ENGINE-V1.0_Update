@@ -4,11 +4,12 @@
   "resolved_commit": "48e57d29b47a3143519910a24866758116467485",
   "resolved_commit_tag": "V4.9.3",
   "source": "src/jhora/horoscope/chart/strength.py",
-  "purpose": "Direct independent-oracle component verification for all 9 Kaala Bala subcomponents",
+  "purpose": "Direct independent-oracle component verification for all 9 Kaala Bala subcomponents under Lahiri Ayanamsa (swe.set_sid_mode(swe.SIDM_LAHIRI))",
+  "ayanamsa_mode": "SIDM_LAHIRI",
   "fixtures": [
     {
       "fixture_id": "PYJHORA_V2_001",
-      "name": "Chofu Japan (existing DSSME regression chart)",
+      "name": "Chofu, Japan",
       "input": {
         "date": "2026-09-16",
         "time": "18:50:00",
@@ -16,7 +17,7 @@
         "latitude": 35.6528,
         "longitude": 139.5447,
         "location_name": "Chofu, Japan",
-        "ayanamsa": "LAHIRI (jhora default config)"
+        "ayanamsa": "Lahiri"
       },
       "julianDay": 2461300.284722222,
       "components": {
@@ -40,9 +41,9 @@
           "masa": 0,
           "vaara": 0,
           "hora": 0,
-          "ayana": 54.79,
+          "ayana": 54.8,
           "yuddha": 0,
-          "total": 189.04
+          "total": 189.05
         },
         "Mars": {
           "nathonnatha": 32.27,
@@ -58,15 +59,15 @@
         },
         "Mercury": {
           "nathonnatha": 60.0,
-          "paksha": 39.01,
+          "paksha": 20.99,
           "tribhaga": 0,
           "abda": 0,
           "masa": 0,
           "vaara": 45,
           "hora": 0,
-          "ayana": 34.74,
+          "ayana": 34.75,
           "yuddha": 0,
-          "total": 178.75
+          "total": 160.74
         },
         "Jupiter": {
           "nathonnatha": 27.73,
@@ -108,7 +109,7 @@
     },
     {
       "fixture_id": "PYJHORA_V2_002",
-      "name": "Yangon Myanmar PM (strong Kendra claim fixture)",
+      "name": "Yangon, Myanmar",
       "input": {
         "date": "2026-09-25",
         "time": "12:01:00",
@@ -116,7 +117,7 @@
         "latitude": 16.8661,
         "longitude": 96.1951,
         "location_name": "Yangon, Myanmar",
-        "ayanamsa": "LAHIRI (jhora default config)"
+        "ayanamsa": "Lahiri"
       },
       "julianDay": 2461309.0006944444,
       "components": {
@@ -152,9 +153,9 @@
           "masa": 0,
           "vaara": 0,
           "hora": 0,
-          "ayana": 56.25,
+          "ayana": 56.24,
           "yuddha": 0,
-          "total": 62.16
+          "total": 62.15
         },
         "Mercury": {
           "nathonnatha": 60.0,
@@ -165,8 +166,8 @@
           "vaara": 0,
           "hora": 0,
           "ayana": 41.28,
-          "yuddha": 11.15,
-          "total": 118.48
+          "yuddha": 9.72,
+          "total": 117.05
         },
         "Jupiter": {
           "nathonnatha": 60.14,
@@ -189,8 +190,8 @@
           "vaara": 45,
           "hora": 0,
           "ayana": 12.19,
-          "yuddha": -11.15,
-          "total": 160.13
+          "yuddha": -9.72,
+          "total": 161.56
         },
         "Saturn": {
           "nathonnatha": -0.14,
@@ -208,15 +209,15 @@
     },
     {
       "fixture_id": "PYJHORA_V2_003",
-      "name": "Berlin Germany (Dreshkon boundary claim fixture)",
+      "name": "Berlin, Germany",
       "input": {
         "date": "2026-05-01",
         "time": "08:20:00",
         "timezone_offset": 2.0,
-        "latitude": 52.52,
-        "longitude": 13.405,
+        "latitude": 52.5200,
+        "longitude": 13.4050,
         "location_name": "Berlin, Germany",
-        "ayanamsa": "LAHIRI (jhora default config)"
+        "ayanamsa": "Lahiri"
       },
       "julianDay": 2461161.847222222,
       "components": {
@@ -253,8 +254,8 @@
           "vaara": 0,
           "hora": 0,
           "ayana": 21.68,
-          "yuddha": -0.3,
-          "total": 46.7
+          "yuddha": -0.39,
+          "total": 46.61
         },
         "Mercury": {
           "nathonnatha": 60.0,
@@ -301,14 +302,14 @@
           "vaara": 0,
           "hora": 0,
           "ayana": 34.64,
-          "yuddha": 0.3,
-          "total": 60.26
+          "yuddha": 0.39,
+          "total": 60.35
         }
       }
     },
     {
       "fixture_id": "PYJHORA_V2_004",
-      "name": "Honolulu USA (Bhava-Madhya cusp claim fixture)",
+      "name": "Honolulu, USA",
       "input": {
         "date": "2026-07-20",
         "time": "17:00:00",
@@ -316,7 +317,7 @@
         "latitude": 21.3069,
         "longitude": -157.8583,
         "location_name": "Honolulu, USA",
-        "ayanamsa": "LAHIRI (jhora default config)"
+        "ayanamsa": "Lahiri"
       },
       "julianDay": 2461242.2083333335,
       "components": {
@@ -388,9 +389,9 @@
           "masa": 0,
           "vaara": 0,
           "hora": 0,
-          "ayana": 38.76,
+          "ayana": 38.75,
           "yuddha": 0,
-          "total": 105.63
+          "total": 105.62
         },
         "Saturn": {
           "nathonnatha": 21.84,
@@ -408,7 +409,7 @@
     },
     {
       "fixture_id": "PYJHORA_V2_005",
-      "name": "Paris France (waning Moon claim fixture)",
+      "name": "Paris, France",
       "input": {
         "date": "2026-11-03",
         "time": "04:00:00",
@@ -416,7 +417,7 @@
         "latitude": 48.8566,
         "longitude": 2.3522,
         "location_name": "Paris, France",
-        "ayanamsa": "LAHIRI (jhora default config)"
+        "ayanamsa": "Lahiri"
       },
       "julianDay": 2461347.6666666665,
       "components": {
