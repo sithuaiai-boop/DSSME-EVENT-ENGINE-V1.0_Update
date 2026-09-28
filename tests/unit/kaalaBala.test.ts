@@ -1,5 +1,5 @@
 /**
- * DSSME EVENT ENGINE V1.0 - KAALA BALA 9-SUBCOMPONENT UNIT TEST
+ * DSSME EVENT ENGINE V1.0 - DIRECT INDEPENDENT PYJHORA 315/315 VERIFICATION
  *
  * Verifies all 9 classical Kaala Bala subcomponents:
  * 1. Nathonnatha Bala
@@ -12,104 +12,119 @@
  * 8. Ayana Bala
  * 9. Yuddha Bala
  *
- * Across all 7 planets on all 5 independent PyJHora V2 oracle fixtures
- * (315 component checks total).
+ * Directly against the immutable independent PyJHora V2 oracle artifact:
+ *   tests/oracle/pyjhora-v2/pyjhora_oracle_v2_kaala_components.json
+ *
+ * Total: 9 components × 7 planets × 5 fixtures = 315 direct component assertions.
  */
 
-import fs from 'fs';
-import path from 'path';
+import fs from 'node:fs';
+import path from 'node:path';
+import crypto from 'node:crypto';
 import { calculateEphemerisSnapshot } from '../../src/engine/astronomy/ephemeris.js';
 import { calculateKaalaBalaAll } from '../../src/engine/strength/kaalaBala.js';
 
 export const PLANETS = ['Sun', 'Moon', 'Mars', 'Mercury', 'Jupiter', 'Venus', 'Saturn'] as const;
+export const KAALA_COMPONENTS = [
+  'nathonnatha',
+  'paksha',
+  'tribhaga',
+  'abda',
+  'masa',
+  'vaara',
+  'hora',
+  'ayana',
+  'yuddha',
+] as const;
 
-// Expected subcomponent reference values extracted directly from PyJHora V4.9.3 (commit 48e57d29)
-// Format for each fixture: { nath, paksha, tribhaga, abda, masa, vaara, hora, ayana, yuddha, total }
-const PYJHORA_9_COMPONENTS: Record<string, Record<string, number[]>> = {
-  PYJHORA_V2_001: {
-    nath: [27.73, 32.27, 32.27, 60.0, 27.73, 27.73, 32.27],
-    paksha: [39.01, 41.98, 39.01, 39.01, 20.99, 20.99, 39.01],
-    tribhaga: [0, 60, 0, 0, 60, 0, 0],
-    abda: [15, 0, 0, 0, 0, 0, 0],
-    masa: [0, 0, 0, 0, 0, 0, 30],
-    vaara: [0, 0, 0, 45, 0, 0, 0],
-    hora: [0, 0, 0, 0, 0, 60, 0],
-    ayana: [66.52, 54.79, 57.5, 34.74, 50.17, 13.76, 36.39],
-    yuddha: [0, 0, 0, 0, 0, 0, 0],
-    total: [148.26, 189.04, 128.78, 178.75, 158.89, 122.48, 137.67],
-  },
-  PYJHORA_V2_002: {
-    nath: [60.14, -0.14, -0.14, 60.0, 60.14, 60.14, -0.14],
-    paksha: [6.05, 107.9, 6.05, 6.05, 53.95, 53.95, 6.05],
-    tribhaga: [60, 0, 0, 0, 60, 0, 0],
-    abda: [15, 0, 0, 0, 0, 0, 0],
-    masa: [0, 0, 0, 0, 0, 0, 30],
-    vaara: [0, 0, 0, 0, 0, 45, 0],
-    hora: [0, 60, 0, 0, 0, 0, 0],
-    ayana: [57.8, 38.02, 56.25, 41.28, 49.51, 12.19, 36.06],
-    yuddha: [0, 0, 0, 11.15, 0, -11.15, 0],
-    total: [198.99, 205.78, 62.16, 118.48, 223.6, 160.13, 71.97],
-  },
-  PYJHORA_V2_003: {
-    nath: [36.4, 23.6, 23.6, 60.0, 36.4, 36.4, 23.6],
-    paksha: [1.72, 116.56, 1.72, 1.72, 58.28, 58.28, 1.72],
-    tribhaga: [0, 0, 0, 60, 60, 0, 0],
-    abda: [0, 0, 0, 0, 15, 0, 0],
-    masa: [0, 0, 0, 30, 0, 0, 0],
-    vaara: [0, 0, 0, 0, 0, 45, 0],
-    hora: [0, 0, 0, 0, 60, 0, 0],
-    ayana: [98.56, 47.16, 21.68, 43.04, 58.29, 57.83, 34.64],
-    yuddha: [0, 0, -0.3, 0, 0, 0, 0.3],
-    total: [136.68, 187.32, 46.7, 194.76, 287.97, 197.51, 60.26],
-  },
-  PYJHORA_V2_004: {
-    nath: [38.16, 21.84, 21.84, 60.0, 38.16, 38.16, 21.84],
-    paksha: [31.29, 57.42, 31.29, 28.71, 28.71, 28.71, 31.29],
-    tribhaga: [0, 0, 0, 0, 60, 0, 60],
-    abda: [15, 0, 0, 0, 0, 0, 0],
-    masa: [0, 0, 30, 0, 0, 0, 0],
-    vaara: [0, 45, 0, 0, 0, 0, 0],
-    hora: [0, 60, 0, 0, 0, 0, 0],
-    ayana: [112.44, 42.14, 59.01, 58.67, 54.47, 38.76, 37.4],
-    yuddha: [0, 0, 0, 0, 0, 0, 0],
-    total: [196.89, 226.4, 142.14, 147.38, 181.34, 105.63, 150.53],
-  },
-  PYJHORA_V2_005: {
-    nath: [17.11, 42.89, 42.89, 60.0, 17.11, 17.11, 42.89],
-    paksha: [35.4, 70.8, 35.4, 35.4, 24.6, 24.6, 35.4],
-    tribhaga: [0, 0, 60, 0, 60, 0, 0],
-    abda: [15, 0, 0, 0, 0, 0, 0],
-    masa: [0, 0, 0, 30, 0, 0, 0],
-    vaara: [0, 45, 0, 0, 0, 0, 0],
-    hora: [0, 0, 0, 0, 60, 0, 0],
-    ayana: [21.58, 13.99, 49.05, 50.53, 47.02, 17.52, 34.62],
-    yuddha: [0, 0, 0, 0, 0, 0, 0],
-    total: [89.09, 172.68, 187.34, 175.93, 208.73, 59.23, 112.91],
-  },
-};
+export interface ComponentCheckRecord {
+  fixtureId: string;
+  planet: string;
+  component: string;
+  expected: number;
+  actual: number;
+  delta: number;
+  status: 'PASS' | 'FAIL';
+}
 
-export async function runKaalaBalaUnitTests(): Promise<{
-  totalChecks: number;
-  passedChecks: number;
-  failedChecks: number;
+export interface KaalaDirectVerificationResult {
+  oraclePath: string;
+  oracleStatus: string;
+  beforeHash: string;
+  afterHash: string;
   fixtureCount: number;
+  planetCount: number;
+  componentAssertionCount: number;
+  passedComponentAssertions: number;
+  failedComponentAssertions: number;
+  totalAssertionCount: number;
+  passedTotalAssertions: number;
+  failedTotalAssertions: number;
+  maxDelta: number;
   componentSummary: Record<string, { passed: number; total: number }>;
-}> {
-  const oraclePath = path.resolve(process.cwd(), 'tests/oracle/pyjhora-v2/pyjhora_oracle_v2_independent.json');
-  const oracle = JSON.parse(fs.readFileSync(oraclePath, 'utf-8'));
+  records: ComponentCheckRecord[];
+}
 
-  const componentNames = ['nathonnatha', 'paksha', 'tribhaga', 'abda', 'masa', 'vaara', 'hora', 'ayana', 'yuddha'];
-  const pyKeys = ['nath', 'paksha', 'tribhaga', 'abda', 'masa', 'vaara', 'hora', 'ayana', 'yuddha'];
+export async function runDirectIndependentOracleKaalaTest(): Promise<KaalaDirectVerificationResult> {
+  const relativeOraclePath = 'tests/oracle/pyjhora-v2/pyjhora_oracle_v2_kaala_components.json';
+  const absoluteOraclePath = path.resolve(process.cwd(), relativeOraclePath);
+
+  if (!fs.existsSync(absoluteOraclePath)) {
+    throw new Error(`Independent PyJHora oracle components artifact not found at ${absoluteOraclePath}`);
+  }
+
+  // 1. Calculate SHA-256 before running assertions (Immutability check)
+  const initialRaw = fs.readFileSync(absoluteOraclePath, 'utf-8');
+  const beforeHash = crypto.createHash('sha256').update(initialRaw).digest('hex');
+
+  const oracle = JSON.parse(initialRaw);
+
+  // 2. Oracle Schema Validation
+  if (oracle.oracleStatus !== 'INDEPENDENT_PYJHORA') {
+    throw new Error(`Invalid oracle status "${oracle.oracleStatus}". Expected "INDEPENDENT_PYJHORA".`);
+  }
+
+  if (!Array.isArray(oracle.fixtures) || oracle.fixtures.length !== 5) {
+    throw new Error(`VERIFICATION_SCHEMA_FAILURE: Expected 5 fixtures, found ${oracle.fixtures?.length}`);
+  }
+
+  for (const fix of oracle.fixtures) {
+    if (!fix.components || typeof fix.components !== 'object') {
+      throw new Error(`VERIFICATION_SCHEMA_FAILURE: Fixture ${fix.fixture_id} missing 'components' dictionary.`);
+    }
+    for (const pName of PLANETS) {
+      const pComponents = fix.components[pName];
+      if (!pComponents) {
+        throw new Error(`VERIFICATION_SCHEMA_FAILURE: Fixture ${fix.fixture_id} missing planet ${pName}.`);
+      }
+      for (const cName of KAALA_COMPONENTS) {
+        if (typeof pComponents[cName] !== 'number') {
+          throw new Error(`VERIFICATION_SCHEMA_FAILURE: Fixture ${fix.fixture_id} planet ${pName} missing component ${cName}.`);
+        }
+      }
+      if (typeof pComponents.total !== 'number') {
+        throw new Error(`VERIFICATION_SCHEMA_FAILURE: Fixture ${fix.fixture_id} planet ${pName} missing 'total'.`);
+      }
+    }
+  }
 
   const componentSummary: Record<string, { passed: number; total: number }> = {};
-  for (const c of componentNames) {
+  for (const c of KAALA_COMPONENTS) {
     componentSummary[c] = { passed: 0, total: 0 };
   }
 
-  let totalChecks = 0;
-  let passedChecks = 0;
-  let failedChecks = 0;
+  let componentAssertionCount = 0;
+  let passedComponentAssertions = 0;
+  let failedComponentAssertions = 0;
 
+  let totalAssertionCount = 0;
+  let passedTotalAssertions = 0;
+  let failedTotalAssertions = 0;
+
+  let maxDelta = 0;
+  const records: ComponentCheckRecord[] = [];
+
+  // 3. Dynamic Fixture Iteration
   for (const fix of oracle.fixtures) {
     const tz = fix.input.timezone_offset;
     const snap = await calculateEphemerisSnapshot(
@@ -126,58 +141,112 @@ export async function runKaalaBalaUnitTests(): Promise<{
       timezoneOffset: tz,
       datetime: fix.input.date + 'T' + fix.input.time,
       timeStr: fix.input.time,
-      planets: snap.planets,
+      planets: snap.planets as any,
     });
 
-    const py = PYJHORA_9_COMPONENTS[fix.fixture_id];
+    for (let p = 0; p < PLANETS.length; p++) {
+      const pName = PLANETS[p];
+      const oracleComponents = fix.components[pName];
 
-    for (let k = 0; k < 9; k++) {
-      const cName = componentNames[k];
-      const pKey = pyKeys[k];
-      for (let p = 0; p < 7; p++) {
-        totalChecks++;
+      // A. Verify 9 subcomponents
+      for (const cName of KAALA_COMPONENTS) {
+        componentAssertionCount++;
         componentSummary[cName].total++;
+
         const act = (breakdowns[p] as any)[cName];
-        const exp = py[pKey][p];
+        const exp = oracleComponents[cName];
         const delta = Math.round((act - exp) * 100) / 100;
 
-        if (Math.abs(delta) <= 0.01) {
-          passedChecks++;
+        if (Math.abs(delta) > maxDelta) maxDelta = Math.abs(delta);
+
+        const status = Math.abs(delta) <= 0.01 ? 'PASS' : 'FAIL';
+        if (status === 'PASS') {
+          passedComponentAssertions++;
           componentSummary[cName].passed++;
         } else {
-          failedChecks++;
-          console.error(`FAIL: ${fix.fixture_id} ${PLANETS[p]} ${cName}: Exp=${exp}, Act=${act}, Delta=${delta}`);
+          failedComponentAssertions++;
         }
+
+        records.push({
+          fixtureId: fix.fixture_id,
+          planet: pName,
+          component: cName,
+          expected: exp,
+          actual: act,
+          delta,
+          status,
+        });
+      }
+
+      // B. Verify Kaala Total
+      totalAssertionCount++;
+      const actTotal = totals[p];
+      const expTotal = oracleComponents.total;
+      const totalDelta = Math.round((actTotal - expTotal) * 100) / 100;
+      if (Math.abs(totalDelta) <= 0.05) {
+        passedTotalAssertions++;
+      } else {
+        failedTotalAssertions++;
       }
     }
   }
 
+  // 4. Validate runtime 315-assertion contract
+  if (componentAssertionCount !== 315) {
+    throw new Error(`EXPECTED 315 COMPONENT COMPARISONS, ACTUAL ${componentAssertionCount}`);
+  }
+
+  // 5. Immutability re-verification (SHA-256 after test execution)
+  const finalRaw = fs.readFileSync(absoluteOraclePath, 'utf-8');
+  const afterHash = crypto.createHash('sha256').update(finalRaw).digest('hex');
+
+  if (beforeHash !== afterHash) {
+    throw new Error(`ORACLE_MUTATION_DETECTED! Pre-SHA256=${beforeHash}, Post-SHA256=${afterHash}`);
+  }
+
   return {
-    totalChecks,
-    passedChecks,
-    failedChecks,
+    oraclePath: relativeOraclePath,
+    oracleStatus: oracle.oracleStatus,
+    beforeHash,
+    afterHash,
     fixtureCount: oracle.fixtures.length,
+    planetCount: oracle.fixtures.length * PLANETS.length,
+    componentAssertionCount,
+    passedComponentAssertions,
+    failedComponentAssertions,
+    totalAssertionCount,
+    passedTotalAssertions,
+    failedTotalAssertions,
+    maxDelta,
     componentSummary,
+    records,
   };
 }
 
+// Backward compatibility alias
+export const runKaalaBalaUnitTests = runDirectIndependentOracleKaalaTest;
+
 if (process.argv[1] && process.argv[1].endsWith('kaalaBala.test.ts')) {
-  runKaalaBalaUnitTests().then((res) => {
-    console.log(`\n====================================================`);
-    console.log(`KAALA BALA 9-SUBCOMPONENT UNIT TEST RESULTS`);
+  runDirectIndependentOracleKaalaTest().then((res) => {
     console.log(`====================================================`);
-    console.log(`Fixtures Tested: ${res.fixtureCount}`);
-    console.log(`Total Subcomponent Checks: ${res.totalChecks}`);
-    console.log(`Passed Checks: ${res.passedChecks}`);
-    console.log(`Failed Checks: ${res.failedChecks}`);
-    console.log(`Pass Rate: ${(res.passedChecks / res.totalChecks * 100).toFixed(2)}%\n`);
+    console.log(`DIRECT PYJHORA COMPONENT VERIFICATION`);
+    console.log(`====================================================\n`);
+    console.log(`Oracle:\n${res.oraclePath}\n`);
+    console.log(`Oracle Status:\n${res.oracleStatus}\n`);
+    console.log(`Fixtures:\n${res.fixtureCount} / 5\n`);
+    console.log(`Planets:\n${res.planetCount} / 35\n`);
 
     for (const [cName, summary] of Object.entries(res.componentSummary)) {
-      console.log(`  ${cName.padEnd(12)}: ${summary.passed} / ${summary.total} PASS`);
+      console.log(`${cName}:\n${summary.passed} / ${summary.total} PASS\n`);
     }
+
+    console.log(`TOTAL COMPONENT ASSERTIONS:\n${res.passedComponentAssertions} / ${res.componentAssertionCount}\n`);
+    console.log(`KAALA TOTAL ASSERTIONS:\n${res.passedTotalAssertions} / ${res.totalAssertionCount}\n`);
+    console.log(`ORACLE MUTATION:\n${res.beforeHash === res.afterHash ? 'NONE' : 'DETECTED'}\n`);
+    console.log(`VERIFICATION CHAIN:\nDIRECT\n`);
     console.log(`====================================================`);
 
-    if (res.failedChecks > 0) {
+    if (res.failedComponentAssertions > 0 || res.failedTotalAssertions > 0) {
       process.exit(1);
     } else {
       process.exit(0);

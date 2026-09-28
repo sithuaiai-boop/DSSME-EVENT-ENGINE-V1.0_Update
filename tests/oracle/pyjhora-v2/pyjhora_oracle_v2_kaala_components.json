@@ -1,0 +1,510 @@
+{
+  "oracleStatus": "INDEPENDENT_PYJHORA",
+  "repository": "naturalstupid/PyJHora",
+  "resolved_commit": "48e57d29b47a3143519910a24866758116467485",
+  "resolved_commit_tag": "V4.9.3",
+  "source": "src/jhora/horoscope/chart/strength.py",
+  "purpose": "Direct independent-oracle component verification for all 9 Kaala Bala subcomponents",
+  "fixtures": [
+    {
+      "fixture_id": "PYJHORA_V2_001",
+      "name": "Chofu Japan (existing DSSME regression chart)",
+      "input": {
+        "date": "2026-09-16",
+        "time": "18:50:00",
+        "timezone_offset": 9.0,
+        "latitude": 35.6528,
+        "longitude": 139.5447,
+        "location_name": "Chofu, Japan",
+        "ayanamsa": "LAHIRI (jhora default config)"
+      },
+      "julianDay": 2461300.284722222,
+      "components": {
+        "Sun": {
+          "nathonnatha": 27.73,
+          "paksha": 39.01,
+          "tribhaga": 0,
+          "abda": 15,
+          "masa": 0,
+          "vaara": 0,
+          "hora": 0,
+          "ayana": 66.52,
+          "yuddha": 0,
+          "total": 148.26
+        },
+        "Moon": {
+          "nathonnatha": 32.27,
+          "paksha": 41.98,
+          "tribhaga": 60,
+          "abda": 0,
+          "masa": 0,
+          "vaara": 0,
+          "hora": 0,
+          "ayana": 54.79,
+          "yuddha": 0,
+          "total": 189.04
+        },
+        "Mars": {
+          "nathonnatha": 32.27,
+          "paksha": 39.01,
+          "tribhaga": 0,
+          "abda": 0,
+          "masa": 0,
+          "vaara": 0,
+          "hora": 0,
+          "ayana": 57.5,
+          "yuddha": 0,
+          "total": 128.78
+        },
+        "Mercury": {
+          "nathonnatha": 60.0,
+          "paksha": 39.01,
+          "tribhaga": 0,
+          "abda": 0,
+          "masa": 0,
+          "vaara": 45,
+          "hora": 0,
+          "ayana": 34.74,
+          "yuddha": 0,
+          "total": 178.75
+        },
+        "Jupiter": {
+          "nathonnatha": 27.73,
+          "paksha": 20.99,
+          "tribhaga": 60,
+          "abda": 0,
+          "masa": 0,
+          "vaara": 0,
+          "hora": 0,
+          "ayana": 50.17,
+          "yuddha": 0,
+          "total": 158.89
+        },
+        "Venus": {
+          "nathonnatha": 27.73,
+          "paksha": 20.99,
+          "tribhaga": 0,
+          "abda": 0,
+          "masa": 0,
+          "vaara": 0,
+          "hora": 60,
+          "ayana": 13.76,
+          "yuddha": 0,
+          "total": 122.48
+        },
+        "Saturn": {
+          "nathonnatha": 32.27,
+          "paksha": 39.01,
+          "tribhaga": 0,
+          "abda": 0,
+          "masa": 30,
+          "vaara": 0,
+          "hora": 0,
+          "ayana": 36.39,
+          "yuddha": 0,
+          "total": 137.67
+        }
+      }
+    },
+    {
+      "fixture_id": "PYJHORA_V2_002",
+      "name": "Yangon Myanmar PM (strong Kendra claim fixture)",
+      "input": {
+        "date": "2026-09-25",
+        "time": "12:01:00",
+        "timezone_offset": 6.5,
+        "latitude": 16.8661,
+        "longitude": 96.1951,
+        "location_name": "Yangon, Myanmar",
+        "ayanamsa": "LAHIRI (jhora default config)"
+      },
+      "julianDay": 2461309.0006944444,
+      "components": {
+        "Sun": {
+          "nathonnatha": 60.14,
+          "paksha": 6.05,
+          "tribhaga": 60,
+          "abda": 15,
+          "masa": 0,
+          "vaara": 0,
+          "hora": 0,
+          "ayana": 57.8,
+          "yuddha": 0,
+          "total": 198.99
+        },
+        "Moon": {
+          "nathonnatha": -0.14,
+          "paksha": 107.9,
+          "tribhaga": 0,
+          "abda": 0,
+          "masa": 0,
+          "vaara": 0,
+          "hora": 60,
+          "ayana": 38.02,
+          "yuddha": 0,
+          "total": 205.78
+        },
+        "Mars": {
+          "nathonnatha": -0.14,
+          "paksha": 6.05,
+          "tribhaga": 0,
+          "abda": 0,
+          "masa": 0,
+          "vaara": 0,
+          "hora": 0,
+          "ayana": 56.25,
+          "yuddha": 0,
+          "total": 62.16
+        },
+        "Mercury": {
+          "nathonnatha": 60.0,
+          "paksha": 6.05,
+          "tribhaga": 0,
+          "abda": 0,
+          "masa": 0,
+          "vaara": 0,
+          "hora": 0,
+          "ayana": 41.28,
+          "yuddha": 11.15,
+          "total": 118.48
+        },
+        "Jupiter": {
+          "nathonnatha": 60.14,
+          "paksha": 53.95,
+          "tribhaga": 60,
+          "abda": 0,
+          "masa": 0,
+          "vaara": 0,
+          "hora": 0,
+          "ayana": 49.51,
+          "yuddha": 0,
+          "total": 223.6
+        },
+        "Venus": {
+          "nathonnatha": 60.14,
+          "paksha": 53.95,
+          "tribhaga": 0,
+          "abda": 0,
+          "masa": 0,
+          "vaara": 45,
+          "hora": 0,
+          "ayana": 12.19,
+          "yuddha": -11.15,
+          "total": 160.13
+        },
+        "Saturn": {
+          "nathonnatha": -0.14,
+          "paksha": 6.05,
+          "tribhaga": 0,
+          "abda": 0,
+          "masa": 30,
+          "vaara": 0,
+          "hora": 0,
+          "ayana": 36.06,
+          "yuddha": 0,
+          "total": 71.97
+        }
+      }
+    },
+    {
+      "fixture_id": "PYJHORA_V2_003",
+      "name": "Berlin Germany (Dreshkon boundary claim fixture)",
+      "input": {
+        "date": "2026-05-01",
+        "time": "08:20:00",
+        "timezone_offset": 2.0,
+        "latitude": 52.52,
+        "longitude": 13.405,
+        "location_name": "Berlin, Germany",
+        "ayanamsa": "LAHIRI (jhora default config)"
+      },
+      "julianDay": 2461161.847222222,
+      "components": {
+        "Sun": {
+          "nathonnatha": 36.4,
+          "paksha": 1.72,
+          "tribhaga": 0,
+          "abda": 0,
+          "masa": 0,
+          "vaara": 0,
+          "hora": 0,
+          "ayana": 98.56,
+          "yuddha": 0,
+          "total": 136.68
+        },
+        "Moon": {
+          "nathonnatha": 23.6,
+          "paksha": 116.56,
+          "tribhaga": 0,
+          "abda": 0,
+          "masa": 0,
+          "vaara": 0,
+          "hora": 0,
+          "ayana": 47.16,
+          "yuddha": 0,
+          "total": 187.32
+        },
+        "Mars": {
+          "nathonnatha": 23.6,
+          "paksha": 1.72,
+          "tribhaga": 0,
+          "abda": 0,
+          "masa": 0,
+          "vaara": 0,
+          "hora": 0,
+          "ayana": 21.68,
+          "yuddha": -0.3,
+          "total": 46.7
+        },
+        "Mercury": {
+          "nathonnatha": 60.0,
+          "paksha": 1.72,
+          "tribhaga": 60,
+          "abda": 0,
+          "masa": 30,
+          "vaara": 0,
+          "hora": 0,
+          "ayana": 43.04,
+          "yuddha": 0,
+          "total": 194.76
+        },
+        "Jupiter": {
+          "nathonnatha": 36.4,
+          "paksha": 58.28,
+          "tribhaga": 60,
+          "abda": 15,
+          "masa": 0,
+          "vaara": 0,
+          "hora": 60,
+          "ayana": 58.29,
+          "yuddha": 0,
+          "total": 287.97
+        },
+        "Venus": {
+          "nathonnatha": 36.4,
+          "paksha": 58.28,
+          "tribhaga": 0,
+          "abda": 0,
+          "masa": 0,
+          "vaara": 45,
+          "hora": 0,
+          "ayana": 57.83,
+          "yuddha": 0,
+          "total": 197.51
+        },
+        "Saturn": {
+          "nathonnatha": 23.6,
+          "paksha": 1.72,
+          "tribhaga": 0,
+          "abda": 0,
+          "masa": 0,
+          "vaara": 0,
+          "hora": 0,
+          "ayana": 34.64,
+          "yuddha": 0.3,
+          "total": 60.26
+        }
+      }
+    },
+    {
+      "fixture_id": "PYJHORA_V2_004",
+      "name": "Honolulu USA (Bhava-Madhya cusp claim fixture)",
+      "input": {
+        "date": "2026-07-20",
+        "time": "17:00:00",
+        "timezone_offset": -10.0,
+        "latitude": 21.3069,
+        "longitude": -157.8583,
+        "location_name": "Honolulu, USA",
+        "ayanamsa": "LAHIRI (jhora default config)"
+      },
+      "julianDay": 2461242.2083333335,
+      "components": {
+        "Sun": {
+          "nathonnatha": 38.16,
+          "paksha": 31.29,
+          "tribhaga": 0,
+          "abda": 15,
+          "masa": 0,
+          "vaara": 0,
+          "hora": 0,
+          "ayana": 112.44,
+          "yuddha": 0,
+          "total": 196.89
+        },
+        "Moon": {
+          "nathonnatha": 21.84,
+          "paksha": 57.42,
+          "tribhaga": 0,
+          "abda": 0,
+          "masa": 0,
+          "vaara": 45,
+          "hora": 60,
+          "ayana": 42.14,
+          "yuddha": 0,
+          "total": 226.4
+        },
+        "Mars": {
+          "nathonnatha": 21.84,
+          "paksha": 31.29,
+          "tribhaga": 0,
+          "abda": 0,
+          "masa": 30,
+          "vaara": 0,
+          "hora": 0,
+          "ayana": 59.01,
+          "yuddha": 0,
+          "total": 142.14
+        },
+        "Mercury": {
+          "nathonnatha": 60.0,
+          "paksha": 28.71,
+          "tribhaga": 0,
+          "abda": 0,
+          "masa": 0,
+          "vaara": 0,
+          "hora": 0,
+          "ayana": 58.67,
+          "yuddha": 0,
+          "total": 147.38
+        },
+        "Jupiter": {
+          "nathonnatha": 38.16,
+          "paksha": 28.71,
+          "tribhaga": 60,
+          "abda": 0,
+          "masa": 0,
+          "vaara": 0,
+          "hora": 0,
+          "ayana": 54.47,
+          "yuddha": 0,
+          "total": 181.34
+        },
+        "Venus": {
+          "nathonnatha": 38.16,
+          "paksha": 28.71,
+          "tribhaga": 0,
+          "abda": 0,
+          "masa": 0,
+          "vaara": 0,
+          "hora": 0,
+          "ayana": 38.76,
+          "yuddha": 0,
+          "total": 105.63
+        },
+        "Saturn": {
+          "nathonnatha": 21.84,
+          "paksha": 31.29,
+          "tribhaga": 60,
+          "abda": 0,
+          "masa": 0,
+          "vaara": 0,
+          "hora": 0,
+          "ayana": 37.4,
+          "yuddha": 0,
+          "total": 150.53
+        }
+      }
+    },
+    {
+      "fixture_id": "PYJHORA_V2_005",
+      "name": "Paris France (waning Moon claim fixture)",
+      "input": {
+        "date": "2026-11-03",
+        "time": "04:00:00",
+        "timezone_offset": 1.0,
+        "latitude": 48.8566,
+        "longitude": 2.3522,
+        "location_name": "Paris, France",
+        "ayanamsa": "LAHIRI (jhora default config)"
+      },
+      "julianDay": 2461347.6666666665,
+      "components": {
+        "Sun": {
+          "nathonnatha": 17.11,
+          "paksha": 35.4,
+          "tribhaga": 0,
+          "abda": 15,
+          "masa": 0,
+          "vaara": 0,
+          "hora": 0,
+          "ayana": 21.58,
+          "yuddha": 0,
+          "total": 89.09
+        },
+        "Moon": {
+          "nathonnatha": 42.89,
+          "paksha": 70.8,
+          "tribhaga": 0,
+          "abda": 0,
+          "masa": 0,
+          "vaara": 45,
+          "hora": 0,
+          "ayana": 13.99,
+          "yuddha": 0,
+          "total": 172.68
+        },
+        "Mars": {
+          "nathonnatha": 42.89,
+          "paksha": 35.4,
+          "tribhaga": 60,
+          "abda": 0,
+          "masa": 0,
+          "vaara": 0,
+          "hora": 0,
+          "ayana": 49.05,
+          "yuddha": 0,
+          "total": 187.34
+        },
+        "Mercury": {
+          "nathonnatha": 60.0,
+          "paksha": 35.4,
+          "tribhaga": 0,
+          "abda": 0,
+          "masa": 30,
+          "vaara": 0,
+          "hora": 0,
+          "ayana": 50.53,
+          "yuddha": 0,
+          "total": 175.93
+        },
+        "Jupiter": {
+          "nathonnatha": 17.11,
+          "paksha": 24.6,
+          "tribhaga": 60,
+          "abda": 0,
+          "masa": 0,
+          "vaara": 0,
+          "hora": 60,
+          "ayana": 47.02,
+          "yuddha": 0,
+          "total": 208.73
+        },
+        "Venus": {
+          "nathonnatha": 17.11,
+          "paksha": 24.6,
+          "tribhaga": 0,
+          "abda": 0,
+          "masa": 0,
+          "vaara": 0,
+          "hora": 0,
+          "ayana": 17.52,
+          "yuddha": 0,
+          "total": 59.23
+        },
+        "Saturn": {
+          "nathonnatha": 42.89,
+          "paksha": 35.4,
+          "tribhaga": 0,
+          "abda": 0,
+          "masa": 0,
+          "vaara": 0,
+          "hora": 0,
+          "ayana": 34.62,
+          "yuddha": 0,
+          "total": 112.91
+        }
+      }
+    }
+  ]
+}

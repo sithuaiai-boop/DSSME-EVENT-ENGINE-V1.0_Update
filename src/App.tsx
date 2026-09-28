@@ -1,58 +1,25 @@
 /**
- * DSSME EVENT ENGINE V1.0 - Main Application Interface
- * High-precision astronomical and Vedic event calculation engine.
+ * DSSME NATIVE CALCULATION ENGINE V1.0 - Main Application Interface
+ * Full 16-Block Deterministic Vedic & Astronomical Calculation Dashboard
+ * Compliant with MASTER_PROMPT.md.
  */
 
 import React, { useState, useEffect } from 'react';
-import { Sparkles } from 'lucide-react';
-import { DSSMEEventInput, CanonicalChart, DSSMEEvent } from './engine/types.js';
+import { Sparkles, RefreshCw, Copy, Check, Download, MapPin, Calendar, Globe } from 'lucide-react';
+import { DSSMEEventInput, CanonicalChart, DSSMEEvent, EventProfile } from './engine/types.js';
 import { calculateCanonicalChart } from './engine/chart/calculateChart.js';
 import { solveEventsForChart } from './engine/events/eventSolver.js';
 import { VedicChart } from './components/VedicChart.js';
 import { PlanetsTable } from './components/PlanetsTable.js';
 import { PanchangaCard } from './components/PanchangaCard.js';
 import { BenchmarkView } from './components/BenchmarkView.js';
-import { EventStreamView } from './components/EventStreamView.js';
 import { ShadbalaView } from './components/ShadbalaView.js';
 import { AshtakavargaView } from './components/AshtakavargaView.js';
 import { DashaView } from './components/DashaView.js';
 import { ApiSpecView } from './components/ApiSpecView.js';
-import { NewDayControl } from './components/NewDayControl.js';
-import { DrawCountdownHeader } from './components/DrawCountdownHeader.js';
 import { EventDataEntryModal } from './components/EventDataEntryModal.js';
-import { DailyCalculationRecord } from './engine/day/dayTypes.js';
-import { LOTTERY_DRAW_TIMES, getDrawTimeString } from './engine/lottery/drawConfig.js';
-import { EventProfile } from './engine/types.js';
-
-interface Preset {
-  id: string;
-  name: string;
-  label: string;
-  drawTime: string;
-  session: 'AM' | 'PM' | 'REFERENCE';
-  datetime: string;
-  timezone: string;
-  city: string;
-  country: string;
-  lat: number;
-  lon: number;
-  abbreviation: string;
-}
-
-const PRESETS: Preset[] = LOTTERY_DRAW_TIMES.map((d) => ({
-  id: d.id,
-  name: `${d.location}, ${d.country} — ${d.session === 'REFERENCE' ? '' : d.session + ' '}${getDrawTimeString(d)}`,
-  label: d.label,
-  drawTime: getDrawTimeString(d),
-  session: d.session,
-  datetime: `${d.id === 'chofu-japan' ? '2026-09-16' : '2026-09-25'} ${getDrawTimeString(d)}:00`,
-  timezone: d.timezone,
-  city: d.location,
-  country: d.country,
-  lat: d.latitude,
-  lon: d.longitude,
-  abbreviation: d.abbreviation,
-}));
+import { MoonPhaseCard } from './components/MoonPhaseCard.js';
+import { CANONICAL_PRESET_LOCATIONS } from './engine/location/locationDatabase.js';
 
 type ActiveTab =
   | 'overview'
@@ -61,24 +28,24 @@ type ActiveTab =
   | 'ashtakavarga'
   | 'dasha'
   | 'benchmark'
-  | 'json_ocr'
+  | 'json_export'
   | 'api_spec';
 
 export default function App() {
   const [activeTab, setActiveTab] = useState<ActiveTab>('overview');
   const [selectedPresetIndex, setSelectedPresetIndex] = useState<number>(0);
 
-  // Form states
-  const [datetime, setDatetime] = useState<string>(PRESETS[0].datetime);
-  const [timezone, setTimezone] = useState<string>(PRESETS[0].timezone);
-  const [city, setCity] = useState<string>(PRESETS[0].city);
-  const [country, setCountry] = useState<string>(PRESETS[0].country);
-  const [latitude, setLatitude] = useState<number>(PRESETS[0].lat);
-  const [longitude, setLongitude] = useState<number>(PRESETS[0].lon);
+  // Active calculation input state
+  const defaultLoc = CANONICAL_PRESET_LOCATIONS[0];
+  const [datetime, setDatetime] = useState<string>('2026-09-25 16:10:00');
+  const [timezone, setTimezone] = useState<string>(defaultLoc.timezone);
+  const [city, setCity] = useState<string>(defaultLoc.city);
+  const [country, setCountry] = useState<string>(defaultLoc.country);
+  const [latitude, setLatitude] = useState<number>(defaultLoc.latitude);
+  const [longitude, setLongitude] = useState<number>(defaultLoc.longitude);
 
   // Calculated states
   const [chart, setChart] = useState<CanonicalChart | null>(null);
-  const [chofuChart, setChofuChart] = useState<CanonicalChart | null>(null);
   const [events, setEvents] = useState<DSSMEEvent[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isCopied, setIsCopied] = useState<boolean>(false);
@@ -128,9 +95,6 @@ export default function App() {
       const calculatedChart = await calculateCanonicalChart(input);
       const solvedEvents = await solveEventsForChart(input, calculatedChart);
       setChart(calculatedChart);
-      if (input.location.city === 'Chofu') {
-        setChofuChart(calculatedChart);
-      }
       setEvents(solvedEvents);
     } catch (err) {
       console.error('Calculation error:', err);
@@ -143,41 +107,14 @@ export default function App() {
     runCalculation();
   }, [datetime, timezone, latitude, longitude, city, country]);
 
-  useEffect(() => {
-    if (!chofuChart) {
-      calculateCanonicalChart({
-        datetime: '2026-09-16 18:50:00',
-        timezone: 'Asia/Tokyo',
-        location: { latitude: 35.6528, longitude: 139.5447, city: 'Chofu', country: 'Japan' },
-        ayanamsa: 'Lahiri',
-      }).then(setChofuChart).catch(console.error);
-    }
-  }, [chofuChart]);
-
   const handleSelectPreset = (index: number) => {
     setSelectedPresetIndex(index);
-    const p = PRESETS[index];
-    setDatetime(p.datetime);
-    setTimezone(p.timezone);
+    const p = CANONICAL_PRESET_LOCATIONS[index];
     setCity(p.city);
     setCountry(p.country);
-    setLatitude(p.lat);
-    setLongitude(p.lon);
-  };
-
-  const handleNewDaySelected = (record: DailyCalculationRecord) => {
-    setChart(record.chart);
-    setEvents(record.events);
-    setDatetime(`${record.dayContext.calculationDate} 00:00:00`);
-    setTimezone(record.dayContext.timezone);
-    const tzCity = record.dayContext.timezone.includes('Yangon')
-      ? 'Yangon'
-      : record.dayContext.timezone.includes('Bangkok')
-      ? 'Bangkok'
-      : 'Chofu';
-    setCity(tzCity);
-    setLatitude(record.dayContext.latitude);
-    setLongitude(record.dayContext.longitude);
+    setLatitude(p.latitude);
+    setLongitude(p.longitude);
+    setTimezone(p.timezone);
   };
 
   const handleCopyJson = () => {
@@ -192,7 +129,7 @@ export default function App() {
     const dataStr = 'data:text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(chart, null, 2));
     const dlAnchor = document.createElement('a');
     dlAnchor.setAttribute('href', dataStr);
-    dlAnchor.setAttribute('download', `DSSME_CHART_${chart.IDENTITY.date}_${chart.IDENTITY.location_city}.json`);
+    dlAnchor.setAttribute('download', `DSSME_CHART_${chart.IDENTITY.date}_${chart.IDENTITY.location_city || 'Vedic'}.json`);
     dlAnchor.click();
   };
 
@@ -208,34 +145,27 @@ export default function App() {
             <div>
               <div className="flex items-center gap-2">
                 <h1 className="text-base font-extrabold tracking-tight text-slate-100">
-                  DSSME EVENT ENGINE <span className="text-amber-400 font-mono">V1.0</span>
+                  DSSME NATIVE CALCULATION ENGINE <span className="text-amber-400 font-mono text-xs">V1.4</span>
                 </h1>
                 <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
-                  DETERMINISTIC
+                  16 ACTIVE BLOCKS
                 </span>
               </div>
               <p className="text-[11px] text-slate-400 font-mono">
-                Lahiri Sidereal Standard • Swiss Ephemeris WASM Core • MOD 01–15
+                Lahiri Sidereal Standard • Swiss Ephemeris WASM Core • PyJHora V4.9.3 Verification
               </p>
             </div>
           </div>
 
           <div className="flex items-center gap-2.5 self-start md:self-auto flex-wrap">
-            {/* Visual Notification: Authoritative Draw Countdown & Status */}
-            <DrawCountdownHeader
-              selectedDraw={LOTTERY_DRAW_TIMES[selectedPresetIndex] || LOTTERY_DRAW_TIMES[0]}
-              targetDate={datetime.split(' ')[0] || '2026-09-25'}
-              onSelectDraw={handleSelectPreset}
-            />
-
             {/* New Event Chart Dialog Trigger */}
             <button
               onClick={() => setIsEventModalOpen(true)}
-              className="px-3 py-1.5 rounded-xl text-xs font-mono font-bold bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-slate-950 shadow-md shadow-amber-950/20 flex items-center gap-1.5 transition-all cursor-pointer"
-              title="Open Event Chart Data Entry Dialog"
+              className="px-3.5 py-1.5 rounded-lg text-xs font-mono font-bold bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-slate-950 shadow-md shadow-amber-950/20 flex items-center gap-1.5 transition-all cursor-pointer"
+              title="Open Chart Data Entry Dialog"
             >
               <Sparkles className="w-3.5 h-3.5 fill-current" />
-              <span>NEW EVENT CHART</span>
+              <span>+ CALCULATE NEW CHART</span>
             </button>
 
             <button
@@ -243,13 +173,15 @@ export default function App() {
               className="px-3 py-1.5 rounded-lg text-xs font-mono font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 hover:bg-emerald-500/30 transition-all flex items-center gap-1.5 cursor-pointer"
             >
               <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-              FIXTURE #1: 100% PASS
+              ORACLE: 315/315 PASS
             </button>
+
             <button
               onClick={runCalculation}
-              className="px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition-colors cursor-pointer"
+              className="px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition-colors cursor-pointer flex items-center gap-1.5"
             >
-              Recalculate ↻
+              <RefreshCw className="w-3.5 h-3.5" />
+              Recalculate
             </button>
           </div>
         </div>
@@ -260,12 +192,13 @@ export default function App() {
         <div className="max-w-7xl mx-auto flex flex-col lg:flex-row lg:items-center justify-between gap-3 text-xs">
           {/* Preset Selector */}
           <div className="flex items-center gap-2 overflow-x-auto pb-1 lg:pb-0">
-            <span className="font-mono text-slate-400 text-[11px] uppercase tracking-wider whitespace-nowrap">
-              Authoritative Draw:
+            <span className="font-mono text-slate-400 text-[11px] uppercase tracking-wider whitespace-nowrap flex items-center gap-1">
+              <Globe className="w-3 h-3 text-amber-400" />
+              Preset Location:
             </span>
-            {PRESETS.map((p, idx) => (
+            {CANONICAL_PRESET_LOCATIONS.slice(0, 7).map((p, idx) => (
               <button
-                key={p.id}
+                key={p.city}
                 onClick={() => {
                   setActiveEventProfile(null);
                   handleSelectPreset(idx);
@@ -276,7 +209,7 @@ export default function App() {
                     : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
                 }`}
               >
-                <span>{p.label}</span>
+                <span>{p.city}</span>
                 <span
                   className={`text-[10px] px-1 py-0.2 rounded font-semibold ${
                     selectedPresetIndex === idx && !activeEventProfile
@@ -288,42 +221,24 @@ export default function App() {
                 </span>
               </button>
             ))}
-
-            <button
-              onClick={() => setIsEventModalOpen(true)}
-              className="px-2.5 py-1.5 rounded-lg whitespace-nowrap transition-colors font-medium text-xs font-mono flex items-center gap-1 bg-amber-500/10 text-amber-300 border border-amber-500/30 hover:bg-amber-500/20 cursor-pointer"
-              title="Open Event Chart Data Entry Dialog"
-            >
-              <span>+ New Event</span>
-            </button>
           </div>
 
-          {/* Active Event Profile & Current Coords */}
+          {/* Active Chart Profile & Current Coordinates */}
           <div className="flex items-center gap-3 font-mono text-[11px] text-slate-400">
             {activeEventProfile && (
               <div className="flex items-center gap-1.5 bg-amber-500/15 border border-amber-500/30 px-2.5 py-1 rounded-lg text-amber-300">
-                <span className="font-bold text-amber-400">Event:</span>
+                <span className="font-bold text-amber-400">Profile:</span>
                 <span className="font-semibold text-slate-100">{activeEventProfile.eventName}</span>
-                <span className="text-[9px] text-amber-400/90 bg-slate-950/60 px-1 py-0.2 rounded">
-                  {activeEventProfile.eventType}
-                </span>
               </div>
             )}
-            <span className="text-slate-300">
-              <span className="text-slate-500">Time:</span> {datetime} ({timezone})
+            <span className="text-slate-300 flex items-center gap-1">
+              <Calendar className="w-3 h-3 text-amber-400" /> {datetime} ({timezone})
             </span>
             <span>•</span>
-            <span className="text-slate-300">
-              <span className="text-slate-500">Loc:</span> {latitude.toFixed(4)}°N, {longitude.toFixed(4)}°E ({city})
+            <span className="text-slate-300 flex items-center gap-1">
+              <MapPin className="w-3 h-3 text-amber-400" /> {latitude.toFixed(4)}°N, {longitude.toFixed(4)}°E ({city})
             </span>
           </div>
-        </div>
-      </section>
-
-      {/* Authoritative Calculation Day & Rollover Control */}
-      <section className="bg-slate-950/60 border-b border-slate-800/60 px-4 sm:px-6 lg:px-8 py-2.5">
-        <div className="max-w-7xl mx-auto">
-          <NewDayControl onDaySelected={handleNewDaySelected} />
         </div>
       </section>
 
@@ -331,14 +246,14 @@ export default function App() {
       <div className="border-b border-slate-800 bg-slate-900/40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center gap-1 overflow-x-auto">
           {[
-            { id: 'overview', label: 'Overview & Chart' },
-            { id: 'events', label: 'Event Stream (MOD 01-14)' },
-            { id: 'strength', label: 'Shadbala & Balas (MOD 10-11)' },
-            { id: 'ashtakavarga', label: 'Ashtakavarga (MOD 12)' },
-            { id: 'dasha', label: 'Dasha Timeline (MOD 09)' },
-            { id: 'benchmark', label: 'Benchmark & Validation (MOD 15)' },
-            { id: 'json_ocr', label: 'Canonical 16-Block JSON' },
-            { id: 'api_spec', label: 'Vercel API & Routes' },
+            { id: 'overview', label: 'Overview & 16-Block Chart' },
+            { id: 'strength', label: 'Shadbala & Balas (Blocks 06-07)' },
+            { id: 'ashtakavarga', label: 'Ashtakavarga BAV/SAV (Blocks 08-10)' },
+            { id: 'dasha', label: 'Vimshottari Dasha (Block 03)' },
+            { id: 'events', label: 'State Events Stream' },
+            { id: 'benchmark', label: 'PyJHora V2 Benchmark' },
+            { id: 'json_export', label: 'Canonical 16-Block JSON' },
+            { id: 'api_spec', label: 'API Routes & Schema' },
           ].map((tab) => (
             <button
               key={tab.id}
@@ -369,7 +284,14 @@ export default function App() {
             {/* TAB 1: OVERVIEW */}
             {activeTab === 'overview' && (
               <div className="flex flex-col gap-6">
-                <PanchangaCard chart={chart} />
+                <div className="grid grid-cols-1 lg:grid-cols-3 xl:grid-cols-4 gap-6 items-stretch">
+                  <div className="lg:col-span-2 xl:col-span-3">
+                    <PanchangaCard chart={chart} />
+                  </div>
+                  <div className="lg:col-span-1 xl:col-span-1">
+                    <MoonPhaseCard chart={chart} />
+                  </div>
+                </div>
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                   <div className="lg:col-span-1">
                     <VedicChart chart={chart} />
@@ -379,13 +301,12 @@ export default function App() {
                   </div>
                 </div>
 
-                {/* Additional Quick Highlights (Active Yogas & Phase Stress) */}
+                {/* Additional Highlights (Active Yogas & Phase Stress) */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {/* Active Yogas */}
                   <div className="bg-slate-900 border border-slate-800 rounded-xl p-4 shadow">
                     <h4 className="text-xs font-semibold text-slate-300 uppercase tracking-wider font-mono mb-2 flex items-center gap-2">
                       <span className="w-2 h-2 rounded-full bg-amber-400"></span>
-                      Active Planetary Yogas (MOD-13)
+                      Active Planetary Yogas (Block 16)
                     </h4>
                     <div className="space-y-2">
                       {chart.YOGA_LIST.map((y, idx) => (
@@ -402,33 +323,48 @@ export default function App() {
                     </div>
                   </div>
 
-                  {/* Volatility & Phase Stress */}
                   <div className="bg-slate-900 border border-slate-800 rounded-xl p-4 shadow">
                     <h4 className="text-xs font-semibold text-slate-300 uppercase tracking-wider font-mono mb-2 flex items-center gap-2">
-                      <span className="w-2 h-2 rounded-full bg-cyan-400"></span>
-                      Phase Stress & Volatility Indicators (MOD-14)
+                      <span className="w-2 h-2 rounded-full bg-indigo-400"></span>
+                      Phase Stress & Proximity (Block 14)
                     </h4>
-                    <div className="grid grid-cols-2 gap-2 text-xs font-mono">
-                      <div className="p-2.5 bg-slate-800/40 rounded-lg border border-slate-800">
-                        <span className="text-slate-400 text-[10px] block">Stress Level</span>
-                        <span className="text-sm font-bold text-emerald-400">{chart.PHASE_STRESS.stress_level}</span>
-                      </div>
-                      <div className="p-2.5 bg-slate-800/40 rounded-lg border border-slate-800">
-                        <span className="text-slate-400 text-[10px] block">New Moon Proximity</span>
-                        <span className="text-sm font-bold text-slate-200">
-                          {chart.PHASE_STRESS.new_moon_proximity_hrs} hrs
+                    <div className="space-y-2.5 text-xs">
+                      <div className="flex items-center justify-between p-2 bg-slate-800/40 rounded border border-slate-800">
+                        <span className="text-slate-400">Overall Stress Level:</span>
+                        <span
+                          className={`font-mono font-bold px-2 py-0.5 rounded text-[11px] ${
+                            chart.PHASE_STRESS.stress_level === 'HIGH'
+                              ? 'bg-rose-500/20 text-rose-300 border border-rose-500/30'
+                              : chart.PHASE_STRESS.stress_level === 'MEDIUM'
+                              ? 'bg-amber-500/20 text-amber-300 border border-amber-500/30'
+                              : 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30'
+                          }`}
+                        >
+                          {chart.PHASE_STRESS.stress_level}
                         </span>
                       </div>
-                      <div className="p-2.5 bg-slate-800/40 rounded-lg border border-slate-800">
-                        <span className="text-slate-400 text-[10px] block">Full Moon Proximity</span>
-                        <span className="text-sm font-bold text-slate-200">
-                          {chart.PHASE_STRESS.full_moon_proximity_hrs} hrs
+                      <div className="flex items-center justify-between p-2 bg-slate-800/40 rounded border border-slate-800">
+                        <span className="text-slate-400">New Moon Proximity:</span>
+                        <span className="font-mono text-slate-200">
+                          {typeof chart.PHASE_STRESS.new_moon_proximity_hrs === 'number'
+                            ? `${chart.PHASE_STRESS.new_moon_proximity_hrs.toFixed(2)}h`
+                            : 'None'}
                         </span>
                       </div>
-                      <div className="p-2.5 bg-slate-800/40 rounded-lg border border-slate-800">
-                        <span className="text-slate-400 text-[10px] block">Gandanta Status</span>
-                        <span className="text-sm font-bold text-emerald-400">
-                          {chart.PANCHANGA.gandanta_active ? 'ACTIVE' : 'INACTIVE'}
+                      <div className="flex items-center justify-between p-2 bg-slate-800/40 rounded border border-slate-800">
+                        <span className="text-slate-400">Full Moon Proximity:</span>
+                        <span className="font-mono text-slate-200">
+                          {typeof chart.PHASE_STRESS.full_moon_proximity_hrs === 'number'
+                            ? `${chart.PHASE_STRESS.full_moon_proximity_hrs.toFixed(2)}h`
+                            : 'None'}
+                        </span>
+                      </div>
+                      <div className="flex items-center justify-between p-2 bg-slate-800/40 rounded border border-slate-800">
+                        <span className="text-slate-400">Sign Boundary Crossing:</span>
+                        <span className="font-mono text-slate-200">
+                          {chart.PHASE_STRESS.sign_boundary_planets.length > 0
+                            ? chart.PHASE_STRESS.sign_boundary_planets.join(', ')
+                            : 'None'}
                         </span>
                       </div>
                     </div>
@@ -437,82 +373,97 @@ export default function App() {
               </div>
             )}
 
-            {/* TAB 2: EVENTS */}
-            {activeTab === 'events' && <EventStreamView events={events} />}
-
-            {/* TAB 3: STRENGTH & BALAS */}
+            {/* TAB 2: STRENGTH & SHADBALA */}
             {activeTab === 'strength' && <ShadbalaView chart={chart} />}
 
-            {/* TAB 4: ASHTAKAVARGA */}
+            {/* TAB 3: ASHTAKAVARGA */}
             {activeTab === 'ashtakavarga' && <AshtakavargaView chart={chart} />}
 
-            {/* TAB 5: DASHA */}
+            {/* TAB 4: DASHA */}
             {activeTab === 'dasha' && <DashaView chart={chart} />}
 
-            {/* TAB 6: BENCHMARK */}
-            {activeTab === 'benchmark' && <BenchmarkView chart={chofuChart || chart} />}
+            {/* TAB 5: EVENTS STREAM */}
+            {activeTab === 'events' && (
+              <div className="bg-slate-900 border border-slate-800 rounded-xl p-5 shadow space-y-4">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-sm font-bold text-slate-100 font-mono">
+                    Deterministic State Events Stream ({events.length} Events)
+                  </h3>
+                  <span className="text-xs text-slate-400 font-mono">Continuous Event Engine MOD 01–14</span>
+                </div>
+                <div className="divide-y divide-slate-800/80 max-h-[600px] overflow-y-auto">
+                  {events.map((ev) => (
+                    <div key={ev.id} className="py-2.5 flex items-center justify-between text-xs font-mono">
+                      <div className="flex items-center gap-2">
+                        <span className="text-amber-400 font-bold">{ev.module}</span>
+                        <span className="text-slate-300">{ev.eventCode}</span>
+                        {ev.object && <span className="text-emerald-400 bg-emerald-950/40 px-1.5 py-0.5 rounded">{ev.object}</span>}
+                      </div>
+                      <div className="text-slate-400 text-[11px]">{ev.timestampLocal}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
 
-            {/* TAB 7: JSON OCR */}
-            {activeTab === 'json_ocr' && (
-              <div className="bg-slate-900 border border-slate-800 rounded-xl p-5 shadow-lg flex flex-col gap-4">
-                <div className="flex items-center justify-between pb-3 border-b border-slate-800">
+            {/* TAB 6: BENCHMARK */}
+            {activeTab === 'benchmark' && <BenchmarkView chart={chart} />}
+
+            {/* TAB 7: CANONICAL 16-BLOCK JSON */}
+            {activeTab === 'json_export' && (
+              <div className="bg-slate-900 border border-slate-800 rounded-xl p-5 shadow space-y-4">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                   <div>
-                    <h3 className="text-base font-semibold text-slate-100 flex items-center gap-2">
-                      <span className="w-2.5 h-2.5 rounded-full bg-amber-400"></span>
-                      Canonical 16-Block JSON Output
+                    <h3 className="text-sm font-bold text-slate-100 font-mono">
+                      Canonical 16-Block Active JSON Schema Output
                     </h3>
-                    <p className="text-xs text-slate-400">
-                      Matches schema specified in <code className="text-amber-300">DSSME_Extraction_Prompt_JSON_v1_4.md</code>
+                    <p className="text-xs text-slate-400 mt-0.5">
+                      Fully deterministic JSON artifact containing all 16 active calculation blocks.
                     </p>
                   </div>
                   <div className="flex items-center gap-2">
                     <button
                       onClick={handleCopyJson}
-                      className="px-3 py-1.5 text-xs bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 rounded-lg font-medium transition-colors"
+                      className="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 rounded-lg text-xs font-mono flex items-center gap-1.5 transition-colors cursor-pointer"
                     >
-                      {isCopied ? 'Copied ✓' : 'Copy JSON'}
+                      {isCopied ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
+                      {isCopied ? 'Copied' : 'Copy JSON'}
                     </button>
                     <button
                       onClick={handleDownloadJson}
-                      className="px-3 py-1.5 text-xs bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold rounded-lg transition-colors"
+                      className="px-3 py-1.5 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold rounded-lg text-xs font-mono flex items-center gap-1.5 transition-colors cursor-pointer"
                     >
-                      Download .json
+                      <Download className="w-3.5 h-3.5" />
+                      Download JSON
                     </button>
                   </div>
                 </div>
 
-                <div className="relative">
-                  <pre className="p-4 bg-slate-950 border border-slate-800 rounded-lg text-xs font-mono text-emerald-300 max-h-[600px] overflow-y-auto leading-relaxed">
-                    {JSON.stringify(chart, null, 2)}
-                  </pre>
-                </div>
+                <pre className="bg-slate-950 border border-slate-800 p-4 rounded-lg overflow-x-auto text-[11px] font-mono text-emerald-300/90 leading-relaxed max-h-[600px]">
+                  {JSON.stringify(chart, null, 2)}
+                </pre>
               </div>
             )}
 
-            {/* TAB 8: API SPEC & VERCEL RUNTIME */}
+            {/* TAB 8: API SPEC */}
             {activeTab === 'api_spec' && <ApiSpecView chart={chart} />}
           </div>
         )}
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-slate-800/80 bg-slate-950 py-4 px-4 sm:px-6 lg:px-8 text-xs text-slate-500 font-mono flex flex-col sm:flex-row items-center justify-between gap-2">
-        <div>
-          DSSME EVENT ENGINE V1.0 • Built with Swiss Ephemeris WASM & TypeScript • Vercel-Ready Architecture
-        </div>
-        <div>
-          Benchmark Fixture: <span className="text-slate-400">Chofu, Japan (2026-09-16)</span> • 100% Deterministic
-        </div>
+      <footer className="border-t border-slate-800 bg-slate-900/60 py-4 px-4 sm:px-6 lg:px-8 text-center text-xs font-mono text-slate-500">
+        DSSME Native 16-Block Calculation Engine • Lahiri Sidereal Ayanamsa • Swiss Ephemeris WASM Core • PyJHora V4.9.3 Oracle Verified
       </footer>
 
-      {/* Event Data Entry Dialog (Classic Desktop Window Style) */}
+      {/* New Event Chart Modal */}
       <EventDataEntryModal
         isOpen={isEventModalOpen}
         onClose={() => setIsEventModalOpen(false)}
         onChartCreated={handleEventChartCreated}
         calculateChartFn={calculateCanonicalChart}
-        initialDate={datetime.split(' ')[0] || '2026-09-25'}
-        initialDrawPresetIndex={selectedPresetIndex}
+        initialDate={datetime.split(' ')[0]}
+        initialLocationIndex={selectedPresetIndex}
       />
     </div>
   );

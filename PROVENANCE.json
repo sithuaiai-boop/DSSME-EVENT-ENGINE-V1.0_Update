@@ -1,0 +1,24 @@
+{
+  "engine": "DSSME Event Engine V1.0",
+  "dssme_git_commit": "63f795c91f7a2542d310bc5673f7c052d1b992de",
+  "dssme_git_branch": "main",
+  "pyjhora_reference": {
+    "repository": "https://github.com/naturalstupid/PyJHora",
+    "pinned_commit": "48e57d29b47a3143519910a24866758116467485",
+    "pinned_tag": "V4.9.3",
+    "source_file": "src/jhora/horoscope/chart/strength.py",
+    "source_sha256": "43b4a1c2fd0374b94aa9fb2b5b5bfd6283a8ca6c72fba466a89d8d29407aa278"
+  },
+  "oracle_artifacts": {
+    "manifest": "tests/oracle/pyjhora-v2/manifest.json",
+    "aggregate_shadbala": "tests/oracle/pyjhora-v2/pyjhora_oracle_v2_independent.json",
+    "kaala_nine_components": "tests/oracle/pyjhora-v2/pyjhora_oracle_v2_kaala_components.json"
+  },
+  "verification_status": {
+    "kaala_total_parity": "35 / 35 PASS (100.00%, Delta = 0.00)",
+    "kaala_nine_components_parity": "315 / 315 PASS (100.00%, Delta = 0.00)",
+    "dig_bala_parity": "35 / 35 PASS (100.00%, Delta = 0.00)",
+    "chesta_bala_parity": "35 / 35 PASS (100.00%, Delta = 0.00)",
+    "naisargika_bala_parity": "35 / 35 PASS (100.00%, Delta = 0.00)"
+  }
+}

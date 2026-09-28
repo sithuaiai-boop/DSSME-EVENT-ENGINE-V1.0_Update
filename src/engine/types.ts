@@ -55,7 +55,6 @@ export interface DSSMEEventInput {
 }
 
 export type EventType =
-  | 'Lottery Draw'
   | 'General Event'
   | 'Prashna'
   | 'Transit Event'
@@ -266,9 +265,6 @@ export interface CanonicalChart {
     lagna_degree: string;
     lagna_type: LagnaType;
     body_mode: string;
-    objective: string;
-    risk: string;
-    geometry: string;
     engine_version: string;
   };
   PANCHANGA: PanchangaState;

@@ -10,7 +10,7 @@
 import { calculateCanonicalChart } from '../../src/engine/chart/calculateChart.js';
 import { calculateBhavaBala } from '../../src/engine/bhava/bhava.js';
 import { DSSMEEventInput } from '../../src/engine/types.js';
-import { PLANETS } from './shadbalaDifferential.test.js';
+import { PLANETS } from './shadbalaDifferential.v2.test.js';
 
 export interface BhavaFirewallReport {
   passed: boolean;

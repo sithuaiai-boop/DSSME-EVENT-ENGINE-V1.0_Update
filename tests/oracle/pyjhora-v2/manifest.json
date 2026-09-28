@@ -27,6 +27,10 @@
     "PYJHORA_V2_004",
     "PYJHORA_V2_005"
   ],
+  "artifacts": {
+    "aggregateShadbala": "pyjhora_oracle_v2_independent.json",
+    "kaalaNineComponents": "pyjhora_oracle_v2_kaala_components.json"
+  },
   "independenceFirewall": "This oracle runner (run_oracle.py) imports only: jhora.panchanga.drik, jhora.horoscope.chart.strength, jhora.const, jhora.utils. It does not import, reference, or reproduce any function from the DSSME repository's src/engine/** tree.",
   "immutabilityPolicy": "This fixture set is evidence. It must not be regenerated to force a future differential test to PASS. Any DSSME engine change that causes a mismatch must be investigated (source-level comparison), not resolved by re-running this generator against new expectations."
 }

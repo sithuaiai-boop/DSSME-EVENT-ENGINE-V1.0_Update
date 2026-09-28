@@ -1,5 +1,6 @@
 import React from 'react';
 import { CanonicalChart } from '../engine/types.js';
+import { getMoonPhaseSvgPath, getMoonPhaseName } from './MoonPhaseCard.js';
 
 interface PanchangaCardProps {
   chart: CanonicalChart;
@@ -9,6 +10,14 @@ export const PanchangaCard: React.FC<PanchangaCardProps> = ({ chart }) => {
   const pan = chart.PANCHANGA;
   const hora = chart.HORA;
   const stress = chart.PHASE_STRESS;
+
+  const sun = chart.PLANETS['Sun'];
+  const moon = chart.PLANETS['Moon'];
+  const sunLon = sun ? sun.totalLongitude : 0;
+  const moonLon = moon ? moon.totalLongitude : 0;
+  const elongation = ((moonLon - sunLon) % 360 + 360) % 360;
+  const phaseInfo = getMoonPhaseName(elongation);
+  const miniPath = getMoonPhaseSvgPath(12, 12, 9, elongation);
 
   return (
     <div className="bg-slate-900 border border-slate-800 rounded-xl p-5 shadow-lg flex flex-col gap-4">
@@ -20,9 +29,16 @@ export const PanchangaCard: React.FC<PanchangaCardProps> = ({ chart }) => {
           </h3>
           <p className="text-xs text-slate-400">5-fold Vedic calendar elements with solar transitions</p>
         </div>
-        <span className="px-2.5 py-1 text-xs font-mono font-medium rounded-md bg-emerald-500/10 text-emerald-300 border border-emerald-500/20">
-          {pan.paksha} Paksha
-        </span>
+        <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1.5 px-2.5 py-1 text-xs font-mono font-medium rounded-md bg-emerald-500/10 text-emerald-300 border border-emerald-500/20" title={`${phaseInfo.westernName} (${phaseInfo.vedicPhase})`}>
+            <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 shrink-0">
+              <circle cx="12" cy="12" r="9" fill="#1e293b" />
+              {miniPath && <path d={miniPath} fill="#fde68a" />}
+              <circle cx="12" cy="12" r="9" fill="none" stroke="#475569" strokeWidth="0.8" />
+            </svg>
+            <span>{pan.paksha} Paksha</span>
+          </div>
+        </div>
       </div>
 
       {/* Grid of 5 Panchanga Pillars */}

@@ -12,9 +12,9 @@
 
 import fs from 'fs';
 import path from 'path';
-import { calculateCanonicalChart } from '../chart/calculateChart.js';
-import { DSSMEEventInput } from '../types.js';
-import { SHADBALA_PLANETS } from './shadbalaConstants.js';
+import { calculateCanonicalChart } from '../../src/engine/chart/calculateChart.js';
+import { DSSMEEventInput } from '../../src/engine/types.js';
+import { SHADBALA_PLANETS } from '../../src/engine/strength/shadbalaConstants.js';
 
 export interface ShadbalaMetricComparison {
   planet: string;
@@ -129,7 +129,7 @@ export async function runShadbalaGoldenTests(): Promise<ShadbalaGoldenReport> {
   };
 }
 
-if (process.argv[1] && process.argv[1].endsWith('shadbalaGoldenTests.ts')) {
+if (process.argv[1] && process.argv[1].endsWith('shadbalaGolden.test.ts')) {
   runShadbalaGoldenTests().then((report) => {
     console.log('=== REAL PYJHORA GOLDEN TEST (CHOFU BENCHMARK) ===');
     console.log(`Oracle: ${report.repository} (${report.pinnedCommit})`);

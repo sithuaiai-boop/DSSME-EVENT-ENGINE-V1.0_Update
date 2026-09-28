@@ -1,18 +1,15 @@
 /**
- * DSSME EVENT ENGINE V1.0 - Server API Handler & Vite Middleware
- * Handles /api/* endpoints for Day Rollover, Chart State, and Benchmark.
+ * DSSME NATIVE CALCULATION ENGINE - Server API Handler & Vite Middleware
+ * Handles /api/* endpoints for Native 16-Block Calculation, Benchmark, and Health.
+ * Compliant with MASTER_PROMPT.md §45-§47.
  */
 
 import { IncomingMessage, ServerResponse } from 'http';
-import { newDayOrchestrator } from '../engine/day/newDayOrchestrator.js';
-import { dayPersistence } from '../engine/day/dayPersistence.js';
-import { runNewDayAcceptanceTests } from '../engine/day/newDayTests.js';
 import { calculateCanonicalChart } from '../engine/chart/calculateChart.js';
 import { solveEventsForChart } from '../engine/events/eventSolver.js';
 import { runChofuBenchmark } from '../engine/benchmark/chofuBenchmark.js';
-import { ENGINE_VERSION, EPHEMERIS_VERSION, getLocalCalendarDate } from '../engine/day/dayUtils.js';
-import { LOTTERY_DRAW_TIMES, getDrawUtcInstant, getDrawTimeString } from '../engine/lottery/drawConfig.js';
-import { runLotteryDrawTests } from '../engine/lottery/drawTests.js';
+import { runDirectIndependentOracleKaalaTest } from '../../tests/unit/kaalaBala.test.js';
+import { DSSMEEventInput } from '../engine/types.js';
 
 function parseJsonBody(req: IncomingMessage): Promise<any> {
   return new Promise((resolve, reject) => {
@@ -58,145 +55,101 @@ export async function handleApiRequest(req: IncomingMessage, res: ServerResponse
     // 1. GET /api/health
     if (url === '/api/health' && req.method === 'GET') {
       sendJson(res, 200, {
-        status: 'UP',
-        engineVersion: ENGINE_VERSION,
-        ephemerisVersion: EPHEMERIS_VERSION,
-        uptimeSeconds: process.uptime(),
-        timestampUTC: new Date().toISOString(),
-      });
-      return true;
-    }
-
-    // 2. GET /api/version
-    if (url === '/api/version' && req.method === 'GET') {
-      sendJson(res, 200, {
-        name: 'DSSME EVENT ENGINE V1.0',
-        engineVersion: ENGINE_VERSION,
-        ephemerisVersion: EPHEMERIS_VERSION,
-        commitHash: 'dssme-universal-v1.4-day-rollover',
-        environment: 'node-esm-wasm',
-      });
-      return true;
-    }
-
-    // 3. GET /api/day/current
-    if (url === '/api/day/current' && req.method === 'GET') {
-      const status = newDayOrchestrator.getStatus();
-      sendJson(res, 200, {
-        status: status.isProcessing ? 'running' : 'completed',
-        timezone: status.configuredTimezone,
-        calculationDate: status.currentLocalCalendarDate,
-        activeRecord: status.activeRecord || null,
-        historyCount: status.historyCount,
-        engineVersion: ENGINE_VERSION,
-        ephemerisVersion: EPHEMERIS_VERSION,
-      });
-      return true;
-    }
-
-    // 4. POST /api/day/calculate
-    if (url === '/api/day/calculate' && req.method === 'POST') {
-      const body = await parseJsonBody(req);
-      const response = await newDayOrchestrator.calculateDay(body);
-      sendJson(res, response.success ? 200 : 400, response);
-      return true;
-    }
-
-    // 5. GET /api/day/history
-    if (url === '/api/day/history' && req.method === 'GET') {
-      const history = dayPersistence.getAllRecords().map((r) => ({
-        jobId: r.jobId,
-        calculationId: r.calculationId,
-        calculationKey: r.calculationKey,
-        calculationDate: r.dayContext.calculationDate,
-        timezone: r.dayContext.timezone,
-        status: r.status,
-        totalEvents: r.summary.totalEvents,
-        boundaryEventsCount: r.summary.boundaryEventsCount,
-        startedAt: r.startedAt,
-        completedAt: r.completedAt,
-        durationMs: r.summary.executionDurationMs,
-      }));
-      sendJson(res, 200, {
-        total: history.length,
-        history,
-      });
-      return true;
-    }
-
-    // 6. GET /api/day/tests
-    if (url === '/api/day/tests' && req.method === 'GET') {
-      const suiteReport = await runNewDayAcceptanceTests();
-      sendJson(res, 200, suiteReport);
-      return true;
-    }
-
-    // 7. GET /api/lottery/schedule
-    if (url === '/api/lottery/schedule' && req.method === 'GET') {
-      const today = getLocalCalendarDate('Asia/Yangon');
-      const schedule = LOTTERY_DRAW_TIMES.map((d) => ({
-        id: d.id,
-        location: d.location,
-        country: d.country,
-        timezone: d.timezone,
-        session: d.session,
-        drawTime: getDrawTimeString(d),
-        abbreviation: d.abbreviation,
-        label: d.label,
-        utcInstant: getDrawUtcInstant(d, today),
-        latitude: d.latitude,
-        longitude: d.longitude,
-      }));
-      sendJson(res, 200, {
-        authoritative: true,
-        referenceDate: today,
-        schedule,
-      });
-      return true;
-    }
-
-    // 8. GET /api/lottery/tests
-    if (url === '/api/lottery/tests' && req.method === 'GET') {
-      const report = await runLotteryDrawTests();
-      sendJson(res, 200, report);
-      return true;
-    }
-
-    // 9. GET /api/benchmark
-    if (url === '/api/benchmark' && req.method === 'GET') {
-      const chart = await calculateCanonicalChart({
-        datetime: '2026-09-16 18:50:00',
-        timezone: 'UTC+9',
-        location: { latitude: 35.6528, longitude: 139.5447, city: 'Chofu', country: 'Japan' },
+        success: true,
+        status: 'HEALTHY',
+        engine: 'DSSME Native 16-Block Engine',
+        version: 'V1.4',
+        mode: 'NATIVE',
         ayanamsa: 'Lahiri',
+        timestamp: new Date().toISOString(),
       });
+      return true;
+    }
+
+    // 2. POST /api/dssme/calculate
+    if (url === '/api/dssme/calculate' && req.method === 'POST') {
+      const body = await parseJsonBody(req);
+      const input: DSSMEEventInput = {
+        datetime: body.datetime || '2026-09-25 16:10:00',
+        timezone: body.timezone || '+06:30',
+        location: {
+          latitude: typeof body.location?.latitude === 'number' ? body.location.latitude : 16.8661,
+          longitude: typeof body.location?.longitude === 'number' ? body.location.longitude : 96.1951,
+          city: body.location?.city || 'Yangon',
+          country: body.location?.country || 'Myanmar',
+        },
+        ayanamsa: body.ayanamsa || 'Lahiri',
+      };
+
+      const chart = await calculateCanonicalChart(input);
+      const events = await solveEventsForChart(input, chart);
+
+      sendJson(res, 200, {
+        success: true,
+        data: chart,
+        events,
+        meta: {
+          engine: 'DSSME',
+          mode: 'NATIVE',
+          version: 'V1.4',
+          blocks: 16,
+          ayanamsa: 'Lahiri',
+          calculatedAt: new Date().toISOString(),
+        },
+        errors: [],
+      });
+      return true;
+    }
+
+    // 3. GET /api/benchmark
+    if (url === '/api/benchmark' && req.method === 'GET') {
+      const input: DSSMEEventInput = {
+        datetime: '2026-09-16 18:50:00',
+        timezone: 'Asia/Tokyo',
+        location: {
+          latitude: 35.6528,
+          longitude: 139.5447,
+          city: 'Chofu',
+          country: 'Japan',
+        },
+        ayanamsa: 'Lahiri',
+      };
+      const chart = await calculateCanonicalChart(input);
       const report = runChofuBenchmark(chart);
-      sendJson(res, 200, report);
+
+      sendJson(res, 200, {
+        success: true,
+        data: report,
+        meta: {
+          fixture: 'PYJHORA_V2_001',
+          source: 'pyjhora_oracle_v2_independent.json',
+        },
+        errors: [],
+      });
       return true;
     }
 
-    // 8. POST /api/chart/state
-    if (url === '/api/chart/state' && req.method === 'POST') {
-      const body = await parseJsonBody(req);
-      const chart = await calculateCanonicalChart(body);
-      sendJson(res, 200, chart);
+    // 4. GET /api/pyjhora/kaala-verification
+    if (url === '/api/pyjhora/kaala-verification' && req.method === 'GET') {
+      const verification = await runDirectIndependentOracleKaalaTest();
+      sendJson(res, 200, {
+        success: verification.failedComponentAssertions === 0,
+        data: verification,
+      });
       return true;
     }
 
-    // 9. POST /api/events/calculate
-    if (url === '/api/events/calculate' && req.method === 'POST') {
-      const body = await parseJsonBody(req);
-      const chart = await calculateCanonicalChart(body);
-      const events = await solveEventsForChart(body, chart);
-      sendJson(res, 200, { chart, events, totalEvents: events.length });
-      return true;
-    }
-
-    sendJson(res, 404, { error: 'Not Found', path: url });
+    // Unhandled API endpoint
+    sendJson(res, 404, {
+      success: false,
+      error: `Endpoint not found: ${req.method} ${url}`,
+    });
     return true;
   } catch (err: any) {
-    console.error('API Error:', err);
-    sendJson(res, 500, { error: err?.message || 'Internal Server Error' });
+    sendJson(res, 500, {
+      success: false,
+      error: err.message || 'Internal server error in DSSME API.',
+    });
     return true;
   }
 }
