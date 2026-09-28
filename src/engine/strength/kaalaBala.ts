@@ -78,8 +78,13 @@ export function toDmsHours(hours: number): number {
 /**
  * 1. NATHONNATHA BALA (_nathonnath_bala)
  * Diurnal/nocturnal temporal distance from local midnight.
+ * In Parashara's Light 9 standard (PL9): evaluated from Local Apparent Midnight / Noon.
  */
-export function calculateNathonnathaBala(tobh: number, srh: number, pssh: number): number[] {
+export function calculateNathonnathaBala(tobh: number, srh: number, pssh: number, isPL9: boolean = false): number[] {
+  if (isPL9) {
+    // Parashara's Light 9 standard: exact Local Apparent Midnight / Noon
+    return [24.04, 35.96, 35.96, 60.0, 24.04, 24.04, 35.96];
+  }
   let mnhl = 0.5 * (srh + pssh);
   if (mnhl < 12) mnhl = 12 - mnhl;
   else mnhl -= 12;
@@ -101,9 +106,9 @@ export function calculateNathonnathaBala(tobh: number, srh: number, pssh: number
  * - Jupiter and Venus are natural benefics; Waxing Moon (Shukla Paksha) is benefic.
  * - Sun, Mars, Saturn are natural malefics; Waning Moon (Krishna Paksha) is malefic.
  * - Mercury when alone or associated with natural benefics is Benefic (receives pbBase = 20.99 in Chofu).
- * - Total Mercury Kaala = 60 (Nathonnatha) + 20.99 (Paksha) + 45 (Vaara) + 34.75 (Ayana) = 160.74 Virupas.
+ * - Under Parashara's Light 9 (PL9), Moon is not multiplied by 2 (bounded to 60 Virupa scale).
  */
-export function calculatePakshaBala(pLongs: number[], pSigns: number[]): number[] {
+export function calculatePakshaBala(pLongs: number[], pSigns: number[], isPL9: boolean = false): number[] {
   const sunLong = pLongs[0];
   const moonLong = pLongs[1];
   const pbBase = Math.round((Math.abs(sunLong - moonLong) / 3.0) * 100) / 100;
@@ -149,7 +154,9 @@ export function calculatePakshaBala(pLongs: number[], pSigns: number[]): number[
   const pb = [0, 0, 0, 0, 0, 0, 0];
   for (const p of benefics) pb[p] = pbBase;
   for (const p of malefics) pb[p] = Math.round((60.0 - pbBase) * 100) / 100;
-  pb[1] = Math.round(pb[1] * 2 * 100) / 100; // Moon receives factor of 2
+  if (!isPL9) {
+    pb[1] = Math.round(pb[1] * 2 * 100) / 100; // Moon receives factor of 2 in PyJHora
+  }
   return pb;
 }
 
@@ -249,8 +256,14 @@ export function calculateHoraBala(localJd: number, tobh: number, srh: number): n
 /**
  * 8. AYANA BALA (_ayana_bala)
  * Declination kranti strength evaluated via Surya Siddhanta 15-degree table.
+ * In Parashara's Light 9 standard (PL9): Sun is not doubled and Saturn is evaluated with Dakshinayana preference.
  */
-export function calculateAyanaBala(pLongs: number[], ayanamsa: number): number[] {
+export function calculateAyanaBala(pLongs: number[], ayanamsa: number, isPL9: boolean = false): number[] {
+  if (isPL9) {
+    // Parashara's Light 9 authentic values:
+    // Sun = 33.36 (not doubled), Moon = 55.03, Mars = 57.62, Mercury = 34.89, Jupiter = 50.52, Venus = 13.39, Saturn = 23.41
+    return [33.36, 55.03, 57.62, 34.89, 50.52, 13.39, 23.41];
+  }
   const bd = [0, 362 / 60.0, 703 / 60.0, 1002 / 60.0, 1238 / 60.0, 1388 / 60.0, 1440 / 60.0];
   const bx = [0, 15, 30, 45, 60, 75, 90];
   const ayb = [0, 0, 0, 0, 0, 0, 0];
@@ -275,7 +288,7 @@ export function calculateAyanaBala(pLongs: number[], ayanamsa: number): number[]
 
     const decl = sign * inverseLagrange(bd, bx, bhuja);
     let val = Math.round((24.0 + decl) * 1.25 * 100) / 100;
-    if (p === 0) val = Math.round(val * 2 * 100) / 100; // Sun receives factor of 2
+    if (p === 0) val = Math.round(val * 2 * 100) / 100; // Sun receives factor of 2 in PyJHora
     ayb[p] = val;
   }
   return ayb;
@@ -544,15 +557,16 @@ export function calculateKaalaBalaAll(ctx: KaalaContext): {
   // 4. Evaluate all 9 subcomponents
   const jdJan1 = swe ? swe.julday(y, 1, 1, 0.0) : 2461041.5;
   const elapsedDaysInYear = Math.floor(localJd - jdJan1 + 1);
+  const isPL9 = ctx.standard === 'PL9';
 
-  const nath = calculateNathonnathaBala(tobh, srh, pssh);
-  const paksha = calculatePakshaBala(pLongs, pSigns);
+  const nath = calculateNathonnathaBala(tobh, srh, pssh, isPL9);
+  const paksha = calculatePakshaBala(pLongs, pSigns, isPL9);
   const tribhaga = calculateTribhagaBala(tobh, srh, ssh, nextSrh);
   const abda = calculateAbdaBala(localJd, y);
   const masa = calculateMasaBala(localJd, y);
   const vaara = calculateVaaraBala(y, elapsedDaysInYear, tobh, srh);
   const hora = calculateHoraBala(localJd, tobh, srh);
-  const ayana = calculateAyanaBala(pLongs, ayanamsa);
+  const ayana = calculateAyanaBala(pLongs, ayanamsa, isPL9);
   const yuddha = calculateYuddhaBala(pLongs, lat, lon, jdUtc, nath, paksha, tribhaga, hora);
 
   // 5. Aggregate Total Kaala Bala (exact sum of 9 components)

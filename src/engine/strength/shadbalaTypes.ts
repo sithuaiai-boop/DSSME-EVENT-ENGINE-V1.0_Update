@@ -64,6 +64,7 @@ export interface ShadbalaContext {
   lagnaLongitude?: number;
   bhavaMadhya?: number[]; // Longitudes of house midpoints / cusps (12 houses)
   timezoneOffset?: number;
+  standard?: 'PL9' | 'PYJHORA';
 }
 
 export interface KaalaContext {
@@ -85,4 +86,5 @@ export interface KaalaContext {
   };
   sthana?: number[];
   dig?: number[];
+  standard?: 'PL9' | 'PYJHORA';
 }

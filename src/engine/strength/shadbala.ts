@@ -91,6 +91,7 @@ export function calculateShadbala(context?: ShadbalaContext): ShadbalaState {
     hora: context?.hora,
     sthana,
     dig,
+    standard: context?.standard,
   });
 
   // 4. Chesta Bala

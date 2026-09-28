@@ -142,6 +142,7 @@ export async function runDirectIndependentOracleKaalaTest(): Promise<KaalaDirect
       datetime: fix.input.date + 'T' + fix.input.time,
       timeStr: fix.input.time,
       planets: snap.planets as any,
+      standard: 'PYJHORA',
     });
 
     for (let p = 0; p < PLANETS.length; p++) {

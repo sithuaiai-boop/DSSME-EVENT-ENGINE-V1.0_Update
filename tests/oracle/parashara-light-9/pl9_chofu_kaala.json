@@ -1,0 +1,99 @@
+{
+  "schema_version": "1.0",
+  "engine": "Parashara's Light 9",
+  "chart_name": "Chofu Master Benchmark",
+  "input": {
+    "date": "2026-09-16",
+    "time": "18:50:00",
+    "timezone_offset": 9.0,
+    "latitude": 35.6528,
+    "longitude": 139.5447,
+    "ayanamsa": "Lahiri"
+  },
+  "planets": {
+    "Sun": {
+      "nata_unnata": 24.04,
+      "paksha": 39.01,
+      "tribhaga": 0.00,
+      "varsha": 15.00,
+      "maasa": 0.00,
+      "vaara": 0.00,
+      "hora": 0.00,
+      "ayana": 33.36,
+      "yuddha": 0.00,
+      "kaala_total": 111.41
+    },
+    "Moon": {
+      "nata_unnata": 35.96,
+      "paksha": 20.99,
+      "tribhaga": 60.00,
+      "varsha": 0.00,
+      "maasa": 0.00,
+      "vaara": 0.00,
+      "hora": 0.00,
+      "ayana": 55.03,
+      "yuddha": 0.00,
+      "kaala_total": 171.98
+    },
+    "Mars": {
+      "nata_unnata": 35.96,
+      "paksha": 39.01,
+      "tribhaga": 0.00,
+      "varsha": 0.00,
+      "maasa": 0.00,
+      "vaara": 0.00,
+      "hora": 0.00,
+      "ayana": 57.62,
+      "yuddha": 0.00,
+      "kaala_total": 132.59
+    },
+    "Mercury": {
+      "nata_unnata": 60.00,
+      "paksha": 20.99,
+      "tribhaga": 0.00,
+      "varsha": 0.00,
+      "maasa": 0.00,
+      "vaara": 45.00,
+      "hora": 0.00,
+      "ayana": 34.89,
+      "yuddha": 0.00,
+      "kaala_total": 160.88
+    },
+    "Jupiter": {
+      "nata_unnata": 24.04,
+      "paksha": 20.99,
+      "tribhaga": 60.00,
+      "varsha": 0.00,
+      "maasa": 0.00,
+      "vaara": 0.00,
+      "hora": 0.00,
+      "ayana": 50.52,
+      "yuddha": 0.00,
+      "kaala_total": 155.55
+    },
+    "Venus": {
+      "nata_unnata": 24.04,
+      "paksha": 20.99,
+      "tribhaga": 0.00,
+      "varsha": 0.00,
+      "maasa": 0.00,
+      "vaara": 0.00,
+      "hora": 60.00,
+      "ayana": 13.39,
+      "yuddha": 0.00,
+      "kaala_total": 118.42
+    },
+    "Saturn": {
+      "nata_unnata": 35.96,
+      "paksha": 39.01,
+      "tribhaga": 0.00,
+      "varsha": 0.00,
+      "maasa": 30.00,
+      "vaara": 0.00,
+      "hora": 0.00,
+      "ayana": 23.41,
+      "yuddha": 0.00,
+      "kaala_total": 128.39
+    }
+  }
+}

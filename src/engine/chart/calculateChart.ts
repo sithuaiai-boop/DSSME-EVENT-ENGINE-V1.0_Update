@@ -186,6 +186,7 @@ export async function calculateCanonicalChart(input: DSSMEEventInput): Promise<C
     timeStr,
     hora,
     lagnaLongitude: snap.lagnaLongitude,
+    standard: (input as any).standard,
   });
 
   // 9. Bhava Bala (Completely independent from Shadbala)
