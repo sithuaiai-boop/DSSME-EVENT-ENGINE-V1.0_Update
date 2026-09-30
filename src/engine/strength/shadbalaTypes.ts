@@ -62,6 +62,7 @@ export interface ShadbalaContext {
   timeStr?: string;
   hora?: string | { planet: string };
   lagnaLongitude?: number;
+  ascendantSignIndex?: number;
   bhavaMadhya?: number[]; // Longitudes of house midpoints / cusps (12 houses)
   timezoneOffset?: number;
   standard?: 'PL9' | 'PYJHORA';

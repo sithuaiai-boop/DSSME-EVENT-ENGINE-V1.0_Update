@@ -61,8 +61,20 @@ export function calculateShadbala(context?: ShadbalaContext): ShadbalaState {
   const houses: HouseInfo[] = context?.houses ?? [];
   const bhavaMadhya = context?.bhavaMadhya;
 
+  // Derive Ascendant Sign Index (0=Aries..11=Pisces)
+  let ascendantSignIndex = context?.ascendantSignIndex;
+  if (ascendantSignIndex === undefined) {
+    if (context?.lagnaLongitude !== undefined) {
+      ascendantSignIndex = Math.floor((((context.lagnaLongitude % 360) + 360) % 360) / 30);
+    } else if (houses[0]?.cuspDegree !== undefined) {
+      ascendantSignIndex = Math.floor((((houses[0].cuspDegree % 360) + 360) % 360) / 30);
+    } else {
+      ascendantSignIndex = 0;
+    }
+  }
+
   // 1. Sthana Bala
-  const { totals: sthana, breakdowns: sthanaBreakdowns } = calculateSthanaBalaAll(planets);
+  const { totals: sthana, breakdowns: sthanaBreakdowns } = calculateSthanaBalaAll(planets, ascendantSignIndex);
 
   // 2. Dig Bala
   const dig = calculateDigBalaAll(planets, houses, bhavaMadhya, {
